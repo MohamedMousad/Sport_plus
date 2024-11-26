@@ -17,5 +17,5 @@ namespace SportPlus.DAL.DB
                 modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             }
         }
-    }
 }
+
