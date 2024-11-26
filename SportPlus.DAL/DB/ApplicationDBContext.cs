@@ -6,9 +6,9 @@ using System.Reflection;
 
 namespace SportPlus.DAL.DB
 {
-        public class ApplicationDBContext : IdentityDbContext<User>
+        public class ApplicationDbContext : IdentityDbContext<User>
         {
-            public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
             {
             }
             protected override void OnModelCreating(ModelBuilder modelBuilder)
