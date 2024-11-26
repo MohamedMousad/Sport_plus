@@ -27,4 +27,3 @@ namespace Entities
         public string FavoriteTeam { get; set; }
     }
 }
-}
