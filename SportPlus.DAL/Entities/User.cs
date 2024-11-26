@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SportPlus.DAL.Enums;
+
 
 namespace Entities
 {
@@ -17,13 +14,10 @@ namespace Entities
         [MinLength(3, ErrorMessage = "NAme must be greater than 3 letter")]
         public string FullName { get; set; } = string.Empty;
         [Required]
-        [RegularExpression(@"(Male|Famale)", ErrorMessage = "Gender Must be Male or Fmale")]
-        public string Gender { get; set; } = string.Empty;
-
-        public string? Address { get; set; }
-        public string? City { get; set; }
+        public Gender Gender { get; set; } 
+        public int Age { get; set; }    
+        public string? Country { get; set; }
         public string? Image { get; set; }
-        public DateTime DOB { get; set; } = DateTime.Now;
-        public string FavoriteTeam { get; set; }
+        public  FavouriteTeam FavouriteTeam  { get; set; }
     }
 }
