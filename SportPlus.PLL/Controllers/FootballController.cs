@@ -2,87 +2,139 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SportPlus.PLL.Models;  // Ensure you have the correct namespace for your models
-//using Microsoft.AspNetCore.Mvc;
-//using System.Net.Http;
-//using System.Threading.Tasks;
-//using Newtonsoft.Json;
-//using System.Collections.Generic;  // Make sure to include this for List<T>
-//using SportPlus.PLL.Models; // Ensure this namespace contains the FootballResult class
-
-public class ApiResponse
+using SportPlus.PLL.Models;
+public class Away
 {
-    public string Get { get; set; }
-    public Parameters Parameters { get; set; }
-    public List<string> Errors { get; set; }
-    public int Results { get; set; }
-    public Paging Paging { get; set; }
-    public List<LeagueResponse> Response { get; set; }
+    public int id { get; set; }
+    public string name { get; set; }
+    public string logo { get; set; }
+    public bool winner { get; set; }
 }
 
-public class Parameters
+public class Extratime
 {
-    public string Id { get; set; }
+    public object home { get; set; }
+    public object away { get; set; }
 }
 
-public class Paging
+public class Fixture
 {
-    public int Current { get; set; }
-    public int Total { get; set; }
+    public int id { get; set; }
+    public object referee { get; set; }
+    public string timezone { get; set; }
+    public DateTime date { get; set; }
+    public int timestamp { get; set; }
+    public Periods periods { get; set; }
+    public Venue venue { get; set; }
+    public Status status { get; set; }
 }
 
-public class LeagueResponse
+public class Fulltime
 {
-    public League League { get; set; }
-    public Country Country { get; set; }
-    public List<Season> Seasons { get; set; }
-    public List<Season> Leagues { get; set; }
+    public object home { get; set; }
+    public object away { get; set; }
+}
 
+public class Goals
+{
+    public int home { get; set; }
+    public int away { get; set; }
+}
+
+public class Halftime
+{
+    public int home { get; set; }
+    public int away { get; set; }
+}
+
+public class Home
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public string logo { get; set; }
+    public bool winner { get; set; }
 }
 
 public class League
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Type { get; set; }
-    public string Logo { get; set; }
+    public int id { get; set; }
+    public string name { get; set; }
+    public string country { get; set; }
+    public string logo { get; set; }
+    public string flag { get; set; }
+    public int season { get; set; }
+    public string round { get; set; }
 }
 
-public class Country
+public class Paging
 {
-    public string Name { get; set; }
-    public string Code { get; set; }
-    public string Flag { get; set; }
+    public int current { get; set; }
+    public int total { get; set; }
 }
 
-public class Season
+public class Parameters
 {
-    public int Year { get; set; }
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
-    public bool Current { get; set; }
-    public Coverage Coverage { get; set; }
+    public string live { get; set; }
 }
 
-public class Coverage
+public class Penalty
 {
-    public Fixtures Fixtures { get; set; }
-    public bool Standings { get; set; }
-    public bool Players { get; set; }
-    public bool TopScorers { get; set; }
-    public bool TopAssists { get; set; }
-    public bool TopCards { get; set; }
-    public bool Injuries { get; set; }
-    public bool Predictions { get; set; }
-    public bool Odds { get; set; }
+    public object home { get; set; }
+    public object away { get; set; }
 }
 
-public class Fixtures
+public class Periods
 {
-    public bool Events { get; set; }
-    public bool Lineups { get; set; }
-    public bool StatisticsFixtures { get; set; }
-    public bool StatisticsPlayers { get; set; }
+    public int first { get; set; }
+    public object second { get; set; }
+}
+
+public class Response
+{
+    public Fixture fixture { get; set; }
+    public League league { get; set; }
+    public Teams teams { get; set; }
+    public Goals goals { get; set; }
+    public Score score { get; set; }
+}
+
+public class Root
+{
+    public string get { get; set; }
+    public Parameters parameters { get; set; }
+    public List<object> errors { get; set; }
+    public int results { get; set; }
+    public Paging paging { get; set; }
+    public List<Response> response { get; set; }
+}
+
+public class Score
+{
+    public Halftime halftime { get; set; }
+    public Fulltime fulltime { get; set; }
+    public Extratime extratime { get; set; }
+    public Penalty penalty { get; set; }
+}
+
+public class Status
+{
+    public string @long { get; set; }
+    public string @short { get; set; }
+    public int elapsed { get; set; }
+    public object extra { get; set; }
+}
+
+public class Teams
+{
+    public Home home { get; set; }
+    public Away away { get; set; }
+}
+
+public class Venue
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public string city { get; set; }
 }
 
 
@@ -99,10 +151,13 @@ public class FootballController : Controller
         _client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
     }
 
-    public async Task<IActionResult> GetLeagues()
+    public async Task<IActionResult> GetFixtures()
     {
         // Make the API call asynchronously
-        var response = await _client.GetAsync("leagues");
+        DateTime date = DateTime.Now;
+        date.ToString("MM-dd");
+        Console.WriteLine(date);
+        var response = await _client.GetAsync($"fixtures?season=2022&date=2022-{date}");
 
         if (!response.IsSuccessStatusCode)
         {
@@ -114,21 +169,9 @@ public class FootballController : Controller
         string rawJson = await response.Content.ReadAsStringAsync();
 
         // Deserialize the raw JSON into the ApiResponse class
-        var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(rawJson);
-
-        // Ensure that leagues are available
-        var leagueList = apiResponse?.Response?.SelectMany(r => r.Leagues).ToList() ?? new List<Season>(); // Safely access the leagues
-
-        // Optionally, you can work with the data like below if needed (e.g., first league's details)
-        if (leagueList.Any())
-        {
-            var leagueName = leagueList[0].Name;
-            var countryName = apiResponse.Response[0].Country.Name;
-            var seasons = apiResponse.Response[0].Seasons;
-            // You can pass additional data to the view if needed
-        }
+        var Root = JsonConvert.DeserializeObject<Root>(rawJson);
 
         // Pass the league list to the view
-        return View(leagueList);
+        return View(Root);
     }
 }

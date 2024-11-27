@@ -45,15 +45,7 @@ namespace SportPlus.BLL.ModelVM.Account
 		[RegularExpression(@"(Male|Female)", ErrorMessage = "Gender Must be Male or Female")]
 		public string Gender { get; set; }
 
-		[Required]
-		[MinLength(14)]
-		[MaxLength(14)]
-		public string NationalId { get; set; }
-
 		public IFormFile? ProfileImage { get; set; }
 		public string? Name {  get; set; }
-
-
-		public DateTime BirthDate { get; set; }
 	}
 }

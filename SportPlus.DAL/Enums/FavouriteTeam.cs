@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SportPlus.DAL.Enums
+﻿namespace SportPlus.DAL.Enums
 {
-    public enum FavouriteTeam 
+    public enum FavouriteTeam
     {
         ManchesterUnited = 33,
         Chelsea = 49,
@@ -14,14 +8,14 @@ namespace SportPlus.DAL.Enums
         Liverpool = 40,
         ManchesterCity = 50,
         TottenhamHotspur = 47,
-        BayernMunch=157,
+        BayernMunchen = 157,
         RealMadrid = 541,
         Barcelona = 529,
         Juventus = 496,
         ParisSaintGermain = 85,
         BorussiaDortmund = 165,
-        Napoli=452,
-        Roma=497,
+        Napoli = 452,
+        Roma = 497,
         Acmilan = 489
     }
 }

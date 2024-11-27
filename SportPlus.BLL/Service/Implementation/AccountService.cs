@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SportPlus.DAL.Repo.Abstraction;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using SportPlus.BLL.Service.Abstraction;
-using SportPlus.DAL.Repo.Abstraction;
+﻿using System.Security.Claims;
 using AutoMapper;
-using SportPlus.BLL.Service.Models;
-using SportPlus.DAL.Entities.User;
-
+using Microsoft.AspNetCore.Identity;
+using SportPlus.BLL.Images;
+using SportPlus.BLL.ModelVM.Account;
+using SportPlus.DAL.Repo.Abstraction;
+using SportPlus.DAL.Entities;
+using SportPlus.BLL.ModelVM.User;
 namespace SportPlus.BLL.Service.Implementation
 {
     internal class AccountService
@@ -28,19 +26,19 @@ namespace SportPlus.BLL.Service.Implementation
             var UserProfileVM = mapper.Map<UserProfileVM>(User);
             return UserProfileVM;
         }
-        public async Task<IdentityResult> UpdateUser(Entities.User User)
+        public async Task<IdentityResult> UpdateUser(User User)
         {
             return await UserRepo.UpdateUserAsync(User);
         }
 
-        public async Task<EditeUserVM> GetUserForEdit(ClaimsPrincipal user)
+        public async Task<EditUserVM> GetUserForEdit(ClaimsPrincipal user)
         {
             var User = await UserRepo.GetUserAsync(user);
             if (User == null)
             {
                 return null;
             }
-            return mapper.Map<EditeUserVM>(User);
+            return mapper.Map<EditUserVM>(User);
         }
         public async Task<UserVM> GetUserForMoreInfo(ClaimsPrincipal user)
         {
@@ -51,7 +49,7 @@ namespace SportPlus.BLL.Service.Implementation
             }
             return mapper.Map<UserVM>(User);
         }
-        public async Task<IdentityResult> UpdateUser(ClaimsPrincipal user, EditeUserVM model)
+        public async Task<IdentityResult> UpdateUser(ClaimsPrincipal user, EditUserVM model)
         {
             var User = await UserRepo.GetUserAsync(user);
 
@@ -68,7 +66,7 @@ namespace SportPlus.BLL.Service.Implementation
             return await UserRepo.UpdateUserAsync(User);
         }
 
-        public async Task<Entities.User> GetCurrentUser(ClaimsPrincipal user)
+        public async Task<User> GetCurrentUser(ClaimsPrincipal user)
         {
             return await UserRepo.GetUserAsync(user);
         }
@@ -142,7 +140,7 @@ namespace SportPlus.BLL.Service.Implementation
             return result;
         }
 
-        public async Task<bool> IsLockedOut(Entities.User User)
+        public async Task<bool> IsLockedOut(User User)
         {
             return await UserRepo.IsLockedOutAsync(User);
         }
@@ -167,7 +165,7 @@ namespace SportPlus.BLL.Service.Implementation
             }
 
             // Use AutoMapper to map RegistrationVM to User
-            var newUser = mapper.Map<Entities.User>(registerVM);
+            var newUser = mapper.Map<User>(registerVM);
             newUser.Image = uploadedFileName;
             newUser.LockoutEnabled = true;
 
@@ -187,5 +185,4 @@ namespace SportPlus.BLL.Service.Implementation
         }
 
     }
-}
 }

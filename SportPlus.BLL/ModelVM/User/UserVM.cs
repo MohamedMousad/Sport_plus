@@ -23,15 +23,8 @@ namespace SportPlus.BLL.ModelVM.User
         public string UserName { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-
-        [Required]
-        public required string NationalId { get; set; }
         public IFormFile? FormFile { get; set; }
-
-        public string? Address { get; set; }
-        public string? City { get; set; }
+        public string? Country { get; set; }
         public bool IsDeleted { get; set; } = false;
-        [Required]
-        public DateTime DOB { get; set; }
     }
 }

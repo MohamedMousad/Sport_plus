@@ -1,5 +1,4 @@
-﻿using Entities;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using SportPlus.DAL.Repo.Abstraction;
+using SportPlus.DAL.Entities;
 
 namespace SportPlus.DAL.Repo.Implementation
 {
