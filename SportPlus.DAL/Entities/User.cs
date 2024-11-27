@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using SportPlus.DAL.Enums;
 
 
-namespace Entities
+namespace SportPlus.DAL.Entities
 {
     [Table("User")]
     public class User : IdentityUser

@@ -6,7 +6,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Entities;
+using SportPlus.DAL.Entities;
 using Microsoft.AspNetCore.Authentication;
 
 namespace SportPlus.DAL.Repo.Abstraction

@@ -1,0 +1,53 @@
+﻿@model SportPlus.PLL.Models.Root
+
+@{
+    ViewData["Title"] = "GetFixtures";
+    Layout = "_Layout"; // Set the layout page if needed
+}
+
+<h1>Football Fixtures</h1>
+
+@if (Model?.response != null && Model.response.Count > 0)
+{
+    <div class="fixtures-list">
+        @foreach (var fixture in Model.response)
+        {
+            <div class="fixture-item">
+                <div class="fixture-date">
+                    <strong>Date:</strong> @fixture.fixture.date.ToString("yyyy-MM-dd HH:mm")
+                </div>
+                <div class="fixture-details">
+                    <div class="teams">
+                        <div class="team home-team">
+                            <img src="@fixture.teams.home.logo" alt="@fixture.teams.home.name" />
+                            <span>@fixture.teams.home.name</span>
+                        </div>
+                        <div class="score">
+                            @if (fixture.score?.fulltime?.home != null && fixture.score?.fulltime?.away != null)
+                            {
+                                <span class="home-score">@fixture.score.fulltime.home</span>
+                                <span class="away-score">@fixture.score.fulltime.away</span>
+                            }
+                            else
+                            {
+                                <span class="status">@fixture.fixture.status.@long</span> <!-- If the match is still playing -->
+                            }
+                </div>
+                <div class="team away-team">
+                    <img src="@fixture.teams.away.logo" alt="@fixture.teams.away.name" />
+                    <span>@fixture.teams.away.name</span>
+                </div>
+            </div>
+            <div class="match-status">
+                <strong>Status:</strong> @fixture.fixture.status.@long
+            </div>
+        </div>
+    </div>
+    }
+</div>
+}
+else
+{
+<p>No fixtures available for the selected date.</p>
+}
+
