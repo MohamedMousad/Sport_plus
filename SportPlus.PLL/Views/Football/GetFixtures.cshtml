@@ -14,7 +14,7 @@
         {
             <div class="fixture-item">
                 <div class="fixture-date">
-                    <strong>Date:</strong> @fixture.fixture.date.ToString("yyyy-MM-dd HH:mm")
+                    <strong>Date:</strong> @fixture.fixture.date
                 </div>
                 <div class="fixture-details">
                     <div class="teams">
@@ -30,7 +30,7 @@
                             }
                             else
                             {
-                                <span class="status">@fixture.fixture.status.@long</span> <!-- If the match is still playing -->
+                                <span class="status">@fixture.fixture.status</span> <!-- If the match is still playing -->
                             }
                 </div>
                 <div class="team away-team">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="match-status">
-                <strong>Status:</strong> @fixture.fixture.status.@long
+                <strong>Status:</strong> @fixture.fixture.status
             </div>
         </div>
     </div>
