@@ -7,6 +7,6 @@ namespace SportPlus.BLL.ModelVM.Account
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 }
