@@ -16,6 +16,8 @@ namespace SportPlus.DAL.DB
                 base.OnModelCreating(modelBuilder);
                 modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             }
+
+    public System.Data.Entity.DbSet<User> Users { get; set; }
         }
 }
 
