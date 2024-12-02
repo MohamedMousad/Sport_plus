@@ -11,11 +11,17 @@ namespace SportPlus.DAL.DB
             public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
             {
             }
+        public ApplicationDbContext()
+        {
+
+        }
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 base.OnModelCreating(modelBuilder);
                 modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             }
-        }
+             public DbSet<User> Users { get; set; }
+
+    }
 }
 
