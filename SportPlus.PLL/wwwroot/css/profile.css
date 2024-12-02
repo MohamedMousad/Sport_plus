@@ -1,0 +1,23 @@
+body {
+    background-color:#121E38
+}
+
+.row {  
+    margin-bottom: 70px;
+}
+
+.col-lg-4 .card {
+    margin-top: 10px;
+    border: 5px solid red;
+    border-radius: 10px;
+}
+
+.col-lg-4 .card :hover {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.col-lg-8 .card {
+    margin-top: 10px;
+    border: 5px solid red;
+    border-radius: 10px;
+}
