@@ -15,4 +15,9 @@
     <Folder Include="wwwroot\uploaded_images\Profile\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SportPlus.BLL\SportPlus.BLL.csproj" />
+    <ProjectReference Include="..\SportPlus.DAL\SportPlus.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

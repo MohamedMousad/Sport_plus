@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using SportPlus.BLL.ModelVM.Account;
+using SportPlus.BLL.ModelVM.User;
+
+
 //using SportPlus.DAL
 //using SportPlus.BLL.ModelVM.Category;
 //using SportPlus.BLL.ModelVM.ItemVM;
@@ -12,23 +16,11 @@ namespace SportPlus.BLL.Mapping
         public DomainProfile()
         {
             // User Mapper
-            CreateMap<User, RegisterVM>();
-            CreateMap<RegisterVM, User>();
-            CreateMap<LoginVM, User>();
-            CreateMap<User, LoginVM>();
-            CreateMap<User, GetUserVM>();
-            CreateMap<User, DeleteUserVM>();
-            CreateMap<DeleteUserVM, User>();
-            CreateMap<User, EditUserVM>();
-            CreateMap<GetUserVM, User>();
-
-            //User Mapper
-            CreateMap<User, DeleteUserVM>();
-            CreateMap<User, EditUserVM>();
-            CreateMap<User, GetUserVM>();
-            CreateMap<User, LoginVM>();
-            CreateMap<User, RegisterVM>();
-            CreateMap<User, UpdateRoleVM>();
+            CreateMap<User, RegistrationVM>().ReverseMap();     
+            CreateMap<LoginVM, User>().ReverseMap();
+            CreateMap<User, UserVM>().ReverseMap();
+            CreateMap<User, EditUserVM>().ReverseMap();
+            CreateMap<ModelVM.Account.UserProfileVM, User>().ReverseMap();
         }
     }
 }
