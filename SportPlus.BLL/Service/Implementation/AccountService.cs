@@ -6,9 +6,10 @@ using SportPlus.BLL.ModelVM.Account;
 using SportPlus.DAL.Repo.Abstraction;
 using SportPlus.DAL.Entities;
 using SportPlus.BLL.ModelVM.User;
+using SportPlus.BLL.Service.Abstraction;
 namespace SportPlus.BLL.Service.Implementation
 {
-    internal class AccountService
+    public class AccountService : IAccountService
     {
         private readonly IAccountRepo UserRepo;
         private readonly IMapper mapper;
@@ -18,12 +19,12 @@ namespace SportPlus.BLL.Service.Implementation
             this.UserRepo = UserRepo;
             this.mapper = mapper;
         }
-        public async Task<UserProfileVM> GetProfile(ClaimsPrincipal user)
+        public async Task<ModelVM.Account.UserProfileVM> GetProfile(ClaimsPrincipal user)
         {
             var User = await UserRepo.GetUserAsync(user);
             if (User == null) return null;
 
-            var UserProfileVM = mapper.Map<UserProfileVM>(User);
+            var UserProfileVM = mapper.Map<ModelVM.Account.UserProfileVM>(User);
             return UserProfileVM;
         }
         public async Task<IdentityResult> UpdateUser(User User)
@@ -184,5 +185,9 @@ namespace SportPlus.BLL.Service.Implementation
             await UserRepo.SignOutAsync();
         }
 
+        public Task<IdentityResult> ChangePassword(ChangePasswordAccountVM model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
