@@ -1,4 +1,4 @@
-﻿@model SportPlus.PLL.Models.Root
+﻿@model SportPlus.PLL.Models.FixtureResponse
 
 @{
     ViewData["Title"] = "GetFixtures";
@@ -7,47 +7,46 @@
 
 <h1>Football Fixtures</h1>
 
-@if (Model?.response != null && Model.response.Count > 0)
+@if (Model?.Response != null && Model.Response.Count > 0)
 {
     <div class="fixtures-list">
-        @foreach (var fixture in Model.response)
+        @foreach (var fixture in Model.Response)
         {
             <div class="fixture-item">
                 <div class="fixture-date">
-                    <strong>Date:</strong> @fixture.fixture.date
+                    <strong>Date:</strong> @fixture.Fixture?.Date
                 </div>
                 <div class="fixture-details">
                     <div class="teams">
                         <div class="team home-team">
-                            <img src="@fixture.teams.home.logo" alt="@fixture.teams.home.name" />
-                            <span>@fixture.teams.home.name</span>
+                            <img src="@fixture.Teams?.Home?.Logo" alt="@fixture.Teams?.Home?.Name" />
+                            <span>@fixture.Teams?.Home?.Name</span>
                         </div>
                         <div class="score">
-                            @if (fixture.score?.fulltime?.home != null && fixture.score?.fulltime?.away != null)
+                            @if (fixture.Score?.Fulltime?.Home != null && fixture.Score?.Fulltime?.Away != null)
                             {
-                                <span class="home-score">@fixture.score.fulltime.home</span>
-                                <span class="away-score">@fixture.score.fulltime.away</span>
+                                <span class="home-score">@fixture.Score.Fulltime.Home</span>
+                                <span class="away-score">@fixture.Score.Fulltime.Away</span>
                             }
                             else
                             {
-                                <span class="status">@fixture.fixture.status</span> <!-- If the match is still playing -->
+                                <span class="status">@fixture.Fixture?.Status?.Short</span> <!-- If the match is still playing -->
                             }
-                </div>
-                <div class="team away-team">
-                    <img src="@fixture.teams.away.logo" alt="@fixture.teams.away.name" />
-                    <span>@fixture.teams.away.name</span>
+                        </div>
+                        <div class="team away-team">
+                            <img src="@fixture.Teams?.Away?.Logo" alt="@fixture.Teams?.Away?.Name" />
+                            <span>@fixture.Teams?.Away?.Name</span>
+                        </div>
+                    </div>
+                    <div class="match-status">
+                        <strong>Status:</strong> @fixture.Fixture?.Status?.Long
+                    </div>
                 </div>
             </div>
-            <div class="match-status">
-                <strong>Status:</strong> @fixture.fixture.status
-            </div>
-        </div>
+        }
     </div>
-    }
-</div>
 }
 else
 {
-<p>No fixtures available for the selected date.</p>
+    <p>No fixtures available for the selected date.</p>
 }
-
