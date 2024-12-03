@@ -95,7 +95,7 @@
         public Score? score { get; set; }
     }
 
-    public class Root
+    public class FixtureResponse
     {
         public string? get { get; set; }
         public Parameters? parameters { get; set; }
