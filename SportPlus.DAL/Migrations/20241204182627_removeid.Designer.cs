@@ -12,8 +12,8 @@ using SportPlus.DAL.DB;
 namespace SportPlus.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241202202650_Initial_Migration")]
-    partial class Initial_Migration
+    [Migration("20241204182627_removeid")]
+    partial class removeid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,7 +166,7 @@ namespace SportPlus.DAL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -183,7 +183,7 @@ namespace SportPlus.DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("FavouriteTeam")
+                    b.Property<int?>("FavouriteTeam")
                         .HasColumnType("int");
 
                     b.Property<string>("FullName")

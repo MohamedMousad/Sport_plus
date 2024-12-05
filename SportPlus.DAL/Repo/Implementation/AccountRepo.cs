@@ -97,10 +97,10 @@ namespace SportPlus.DAL.Repo.Implementation
             return await userManager.CreateAsync(user, password);
         }
 
-        public async Task AddToRoleAsync(User user, string role)
-        {
-            await userManager.AddToRoleAsync(user, role);
-        }
+        //public async Task AddToRoleAsync(User user, string role)
+        //{
+        //    await userManager.AddToRoleAsync(user, role);
+        //}
 
         public async Task<SignInResult> PasswordSignInAsync(User user, string password)
         {

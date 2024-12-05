@@ -27,7 +27,6 @@ namespace SportPlus.DAL.Repo.Abstraction
             Task<bool> IsLockedOutAsync(User User);
             Task<IEnumerable<AuthenticationScheme>> GetExternalAuthenticationSchemesAsync();
             Task<IdentityResult> CreateUserAsync(User user, string password);
-            Task AddToRoleAsync(User user, string role);
             Task<SignInResult> PasswordSignInAsync(User user, string password);
             Task SignOutAsync();
 

@@ -8,7 +8,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="~/fonts/icomoon/style.css">
 
   <link rel="stylesheet" href="~/css/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="~/css/jquery-ui.css">
@@ -26,8 +26,6 @@
 
   <link rel="stylesheet" href="~/css/style.css">
 </head>
-
-
 <body>
       <header class="site-navbar py-4" role="banner">
 
@@ -35,18 +33,18 @@
         <div class="d-flex align-items-center">
           <div class="site-logo">
             <a href="index.html">
-              <img src="images/flamingtext_com-208494727.png" alt="Logo" width = "170px" height = "60px" >
+              <img src="~/images/flamingtext_com-208494727.png" alt="Logo" width = "170px" height = "60px" >
             </a>
           </div>
           <div class="ml-auto">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class = "active"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="active"><a asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
                 <li><a href="matches.html" class="nav-link">Matches</a></li>
                 <li><a href="players.html" class="nav-link">Players</a></li>
-                <li><a href="blog.html" class="nav-link">Sign In</a></li>
-                <li><a href="contact.html" class="nav-link">Sign UP</a></li>
-                <li ><a href="profile.html" class="nav-link">My Profile</a></li>
+                <li><a class="nav-link" asp-controller="Account" asp-action="Login">Sign In</a></li>
+                <li><a asp-controller="Account" asp-action="Register"  class="nav-link">Sign UP</a></li>
+                <li><a asp-controller="Account" asp-action="Profile" class="nav-link">My Profile</a></li>
               </ul>
             </nav>
             </section>
@@ -56,13 +54,7 @@
           </div>
         </div>
     </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
             @RenderBody()
-        </main>
-    </div>
-
    <footer class="footer-section">
       <div class="container">
         <div class="row">

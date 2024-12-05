@@ -33,16 +33,14 @@ namespace SportPlus.PLL.Controllers
         //1 represent profile of user 
         public async Task<IActionResult> Profile()
         {
-            var patientProfileVM = await userService.GetProfile(User);
-            if (patientProfileVM == null)
+            var UserProfileVM = await userService.GetProfile(User);
+            if (UserProfileVM == null)
             {
                 return NotFound();
             }
 
-            return View(patientProfileVM);
+            return View(UserProfileVM);
         }
-
-
         //2 update 
         public async Task<IActionResult> UpdateProfile()
         {
@@ -145,7 +143,7 @@ namespace SportPlus.PLL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginSubmitted(LoginVM loginVM)
+        public async Task<IActionResult> Login(LoginVM loginVM)
         {
             if (!ModelState.IsValid)
             {
@@ -169,7 +167,6 @@ namespace SportPlus.PLL.Controllers
                 ModelState.AddModelError("", "Your account is locked. Please try again later.");
                 return View("Login", loginVM);
             }
-
             ModelState.AddModelError("", "Invalid login attempt. Please check your email and password.");
             return View("Login", loginVM);
         }
@@ -182,7 +179,7 @@ namespace SportPlus.PLL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterUser(RegistrationVM registerVM)
+        public async Task<IActionResult> Register(RegistrationVM registerVM)
         {
             if (!ModelState.IsValid)
             {
@@ -246,7 +243,7 @@ namespace SportPlus.PLL.Controllers
 
                 TempData["EmailConfirmation"] = "Thank you! Please, check your email to verify your account";
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
 
             ModelState.AddModelError("", $"Email address {confirmEmailLoginVM.EmailAddress} does not exist");
@@ -430,7 +427,7 @@ namespace SportPlus.PLL.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
                     TempData["ExternalLoginCallback"] = "Please,Complete the required information";
-                    return RedirectToAction("UpdateProfile");
+                    return RedirectToAction("Index","Home");
                 }
 
             }
@@ -438,6 +435,9 @@ namespace SportPlus.PLL.Controllers
             ModelState.AddModelError("", $"Something went wrong");
             return View("Login", loginVM);
         }
+
+
+
         public async Task<IActionResult> ProfileInfo()
         {
             var model = await userService.GetUserForMoreInfo(User);

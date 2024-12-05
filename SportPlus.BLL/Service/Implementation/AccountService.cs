@@ -173,8 +173,7 @@ namespace SportPlus.BLL.Service.Implementation
             var userCreated = await UserRepo.CreateUserAsync(newUser, registerVM.Password);
 
             if (userCreated.Succeeded)
-            {
-                await UserRepo.AddToRoleAsync(newUser, "User");
+            { 
                 await UserRepo.PasswordSignInAsync(newUser, registerVM.Password);
             }
 

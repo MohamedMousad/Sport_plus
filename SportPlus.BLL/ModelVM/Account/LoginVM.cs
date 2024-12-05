@@ -6,6 +6,7 @@ namespace SportPlus.BLL.ModelVM.Account
 {
     public class LoginVM
     {
+        [Required]
         public string Email { get; set; }
 
         [Required]

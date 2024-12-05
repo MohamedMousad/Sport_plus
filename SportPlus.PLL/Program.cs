@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SportPlus.BLL.Mapping;
 using SportPlus.BLL.Service.Abstraction;
 using SportPlus.BLL.Service.Implementation;
 using SportPlus.DAL.DB;
@@ -11,51 +13,87 @@ namespace SportPlus.PLL
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+		public static void Main(string[] args)
+		{
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+			var builder = WebApplication.CreateBuilder(args);
 
-            // Add DbContext with configuration
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+			// Add services to the container.
+			builder.Services.AddControllersWithViews();
 
-            builder.Services.AddScoped<IAccountRepo, AccountRepo>();
-            builder.Services.AddScoped<IAccountService, AccountService>();
+			// Add DbContext with configuration
+			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+			builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+			builder.Services.AddScoped<IAccountService, AccountService>();
 
-            builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
+			// Add AutoMapper
+			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            builder.Services.AddHttpClient();
+			builder.Services.AddIdentity<User, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultTokenProviders();
 
-            var app = builder.Build();
+			builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddRoles<IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+			builder.Services.AddAuthentication()
+				.AddGoogle(options =>
+				{
+					options.ClientId = builder.Configuration["Auth:Google:ClientId"];
+					options.ClientSecret = builder.Configuration["Auth:Google:ClientSecret"];
+				});
+			builder.Services.AddAuthentication()
+				.AddFacebook(options =>
+				{
+					options.AppId = builder.Configuration["Auth:Facebook:AppId"];
+					options.AppSecret = builder.Configuration["Auth:Facebook:AppSecret"];
+				});
 
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthorization();
+			builder.Services.AddHttpClient();
 
-            app.MapStaticAssets();
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+				options =>
+			{
+				options.LoginPath = new PathString("/Account/Login");
+				options.AccessDeniedPath = new PathString("/Account/Login");
+			});
+			builder.Services.Configure<IdentityOptions>(options =>
+			{
+				//Lockout settings
+				options.Lockout.MaxFailedAccessAttempts = 5;
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 
-            app.Run();
-        }
-    }
+				//Signin settings
+				options.SignIn.RequireConfirmedEmail = true;
+			});
+
+			
+
+			using var app = builder.Build();
+
+			// Configure the HTTP request pipeline.
+			if (!app.Environment.IsDevelopment())
+			{
+				app.UseExceptionHandler("/Home/Error");
+				app.UseHsts();
+			}
+			app.UseHttpsRedirection();
+			app.UseRouting();
+			app.UseAuthorization();
+
+			app.MapStaticAssets();
+			app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}")
+				.WithStaticAssets();
+
+			app.Run();
+		}
+
+	}
 }
