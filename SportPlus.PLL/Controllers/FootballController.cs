@@ -33,10 +33,10 @@ public class FootballController : Controller
     //    // Read the raw JSON content as a string
     //    string rawJson = await response.Content.ReadAsStringAsync();
 
-    //    // Deserialize the raw JSON into the ApiResponse class
-    //    var Root = JsonConvert.DeserializeObject<Root>(rawJson);
+        // Deserialize the raw JSON into the ApiResponse class
+        var Fixtures = JsonConvert.DeserializeObject<Fixtures>(rawJson);
 
-    //    // Pass the league list to the view
-    //    return View(Root);
-    //}
+        // Pass the league list to the view
+        return View(Fixtures);
+    }
 }
