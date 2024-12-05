@@ -40,17 +40,25 @@ namespace SportPlus.PLL
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
 
-			builder.Services.AddAuthentication()
+			 builder.Services.AddAuthentication()
 				.AddGoogle(options =>
 				{
+#pragma warning disable CS8601 // Possible null reference assignment.
 					options.ClientId = builder.Configuration["Auth:Google:ClientId"];
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning disable CS8601 // Possible null reference assignment.
 					options.ClientSecret = builder.Configuration["Auth:Google:ClientSecret"];
+#pragma warning restore CS8601 // Possible null reference assignment.
 				});
-			builder.Services.AddAuthentication()
+			 builder.Services.AddAuthentication()
 				.AddFacebook(options =>
 				{
+#pragma warning disable CS8601 // Possible null reference assignment.
 					options.AppId = builder.Configuration["Auth:Facebook:AppId"];
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning disable CS8601 // Possible null reference assignment.
 					options.AppSecret = builder.Configuration["Auth:Facebook:AppSecret"];
+#pragma warning restore CS8601 // Possible null reference assignment.
 				});
 
 			builder.Services.AddHttpClient();
