@@ -6,6 +6,10 @@ namespace SportPlus.BLL.Images
     {
         public static string UploadFile(string FolderName, IFormFile File)
         {
+            if (File == null || File.Length == 0)
+            {
+                return "No file provided.";
+            }
 
             try
             {

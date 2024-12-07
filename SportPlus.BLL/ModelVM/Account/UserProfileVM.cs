@@ -5,7 +5,6 @@ namespace SportPlus.BLL.ModelVM.Account
 {
     public class UserProfileVM
     {
-        public string? Fullname { get; set; }
 
         public string FullName { get; set; }
         public string Email { get; set; }

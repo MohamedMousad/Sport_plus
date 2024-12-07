@@ -75,7 +75,39 @@ namespace SportPlus.PLL.Controllers
             TempData["SuccessMessage"] = "Your profile has been updated successfully!";
             return RedirectToAction("Profile", "Account");
         }
-       
+        //3 delete
+        [HttpGet]
+        public async Task<IActionResult> Delete()
+        {
+            var user = await userService.GetCurrentUser(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var result = await userService.DeleteUserAccount(User);
+
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Your account has been deactivated.";
+                return RedirectToAction("Register", "Account");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View("DeleteAccount");
+        }
+        //4 update password
         public IActionResult ChangePassword() => View();
 
         [HttpPost]

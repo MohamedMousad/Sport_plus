@@ -4,17 +4,17 @@
 //using System.Threading.Tasks;
 //using SportPlus.PLL.Models;
 //public class FootballController : Controller
-//{
+    //{
 //    private readonly HttpClient _client;
 
 //    // Constructor to inject HttpClient
 //    public FootballController(HttpClient client)
-//    {
+    //    {
 //        _client = client;
 //        _client.BaseAddress = new Uri("https://v3.football.api-sports.io/"); // Set the base address
 //        _client.DefaultRequestHeaders.Add("x-rapidapi-key", "94cad5d0fdf6426e72bf730032dbced9"); // Add the API key
 //        _client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
-//    }
+    //    }
 
 //    //public async Task<IActionResult> GetFixtures()
 //    //{
