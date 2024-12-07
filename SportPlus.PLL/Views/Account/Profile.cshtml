@@ -17,7 +17,7 @@
             <div class="col-lg-4">
               <div class="card mb-4">
                 <div class="card-body text-center">
-                <img src="~/ProfileImages/@Model.ProfileImage" class="img-fluid rounded-circle p-3"
+                <img src="~/Profile/Photo/@Model.ProfileImage" class="img-fluid rounded-circle p-3"
                   alt="Patient Image" style="max-height: 250px;">
                   <h5 class="my-3">John Smith</h5>
                   <p class="text-muted mb-1">Full Stack Developer</p>
@@ -71,6 +71,7 @@
                   </div>
                 </div>
               </div>
+                    <a asp-controller="Account" asp-action="UpdateProfile" class="nav-link">Update Profile</a>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
      @* <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> -->  *@

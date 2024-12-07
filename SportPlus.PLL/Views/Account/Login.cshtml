@@ -103,13 +103,13 @@
         }
 
         .social .go {
-            margin-left: -50px;
+            margin-left: -200px;
             margin-top: 30px;
         }
 
-        .social .fb {
+        .fb {
             margin-top: 30px;
-            margin-left: -100px;
+            margin-left: -150px;
         }
 
         .social i {
@@ -136,36 +136,22 @@
 
         <label for="Password">Password</label>
         <input type="password" value="" asp-for="Password" placeholder="Password" id="password" name="password">
-
+        <a asp-controller="Account" asp-action="ForgotPassword">Forgot your password?</a>
         <button type="submit">Log In</button>
-
+        <p>Or Login With Social Media:</p>
         <div class="social">
-          <div class="go"><a href = "#"><img src = "~/images/icons8-google-logo-30 (1).png"></a></div>
-          <div class="fb"><a href = "#"><img src = "~/images/icons8-facebook-logo-30.png" ></a></div>
+            <div class="go">
+                <a href="/Account/ExternalLogin?provider=Google">
+                    <img src="~/images/icons8-google-logo-30 (1).png" alt="Google Logo">
+                </a>
+            </div>
+        </div>
+        <div class="fb">
+            <a href="/Account/ExternalLogin?provider=Facebook">
+                <img src="~/images/icons8-facebook-logo-30.png" alt="Facebook Logo">
+            </a>
         </div>
     </form>
-    @* <p>Or Login With Social Media:</p> *@
-    @* <form asp-action="ExternalLogin" asp-controller="Account"> *@
-    @*     <div> *@
-    @*         @if (Model.Schemes == null || !Model.Schemes.Any()) *@
-    @*         { *@
-    @*             <div>No external login providers have configured</div> *@
-    @*         } *@
-    @*         else *@
-    @*         { *@
-    @*             @foreach (var provider in Model.Schemes) *@
-    @*             { *@
-    @*                 <button type="submit" *@
-    @*                         class="btn btn-primary" *@
-    @*                         name="provider" *@
-    @*                         value="@provider.Name" *@
-    @*                         title="Login using your @provider.Name account"> *@
-    @*                     @provider.DisplayName *@
-    @*                 </button> *@
-    @*             } *@
-    @*         } *@
-    @*     </div> *@
-    @* </form> *@
-    </body>
+</body>
 
 

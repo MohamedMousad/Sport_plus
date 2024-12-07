@@ -60,7 +60,7 @@ namespace SportPlus.BLL.Service.Implementation
             }
             if (model.NewProfileImage != null && model.NewProfileImage.Length > 0)
             {
-                var uploadedFileName = UploadImage.UploadFile("Profile", model.NewProfileImage);
+                var uploadedFileName = UploadImage.UploadFile("Photo", model.NewProfileImage);
                 model.Image = uploadedFileName;
             }
             mapper.Map(model, User);
@@ -162,7 +162,7 @@ namespace SportPlus.BLL.Service.Implementation
             string uploadedFileName = null;
             if (registerVM.ProfileImage != null)
             {
-                uploadedFileName = UploadImage.UploadFile("Profile", registerVM.ProfileImage);
+                uploadedFileName = UploadImage.UploadFile("Photo", registerVM.ProfileImage);
             }
 
             // Use AutoMapper to map RegistrationVM to User

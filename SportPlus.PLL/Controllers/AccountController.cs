@@ -36,7 +36,7 @@ namespace SportPlus.PLL.Controllers
             var UserProfileVM = await userService.GetProfile(User);
             if (UserProfileVM == null)
             {
-                return NotFound();
+                return View("Register");
             }
 
             return View(UserProfileVM);
@@ -75,39 +75,7 @@ namespace SportPlus.PLL.Controllers
             TempData["SuccessMessage"] = "Your profile has been updated successfully!";
             return RedirectToAction("Profile", "Account");
         }
-        //3 delete
-        [HttpGet]
-        public async Task<IActionResult> Delete()
-        {
-            var user = await userService.GetCurrentUser(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAccount()
-        {
-            var result = await userService.DeleteUserAccount(User);
-
-            if (result.Succeeded)
-            {
-                TempData["SuccessMessage"] = "Your account has been deactivated.";
-                return RedirectToAction("Register", "Account");
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-
-            return View("DeleteAccount");
-        }
-        //4 update password
+       
         public IActionResult ChangePassword() => View();
 
         [HttpPost]
@@ -344,13 +312,13 @@ namespace SportPlus.PLL.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return RedirectToAction("ResetPasswordConfirmation");
+                return RedirectToAction("Login");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation");
+                return RedirectToAction("Login");
             }
 
             foreach (var error in result.Errors)
@@ -421,7 +389,7 @@ namespace SportPlus.PLL.Controllers
                         };
 
                         await _userManager.CreateAsync(user);
-                        await _userManager.AddToRoleAsync(user, "User");
+                      //  await _userManager.AddToRoleAsync(user, "User");
                     }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
