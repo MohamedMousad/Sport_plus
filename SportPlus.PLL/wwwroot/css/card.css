@@ -1,0 +1,115 @@
+@media (min-width: 992px) {
+    .css-1lleae-CardCSS {
+        border-radius: 16px;
+    }
+}
+
+.css-1lleae-CardCSS {
+    overflow: hidden;
+    background-color: rgba(29, 29, 29, 1.0);
+    border: solid 1px transparent;;
+    border-radius: 16px;
+    display: block;
+    font-family:system, Arial, sans-serif;
+    font-weight: normal;
+    font-feature-settings: "ss01";
+    box-sizing: border-box;
+    color: rgba(255, 255, 255, 1.0);
+    width: 50%;
+    margin-left: 350px;
+}
+
+div {
+    color: rgba(255, 255, 255, 1.0);
+    unicode-bidi: isolate;
+    font-weight: normal;
+    box-sizing: border-box;
+}
+
+.css-1lleae-CardCSS a{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1.0);
+    outline: none;
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+.css-1jj74kp-GroupHeaderContainer {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 48px;
+    padding-left: 16px;
+    letter-spacing: 0.27px;
+    background: red;
+}
+
+.css-97a72h-LeagueMatchesWrapper {
+    --item-height: 64px;
+    --duration: 150ms;
+    display: flex;
+    justify-content: center;
+}
+
+.css-s4hjf6-MatchWrapper:last-child {
+    border-bottom: none;
+}
+@media (min-width: 769px) {
+    .css-s4hjf6-MatchWrapper {
+        column-gap: 12px;
+        min-height: 64px;
+    }
+}
+
+.css-s4hjf6-MatchWrapper {
+    position: relative;
+    display: grid
+;
+    -webkit-box-align: center;
+    align-items: center;
+    grid-template-columns: 1fr 40px 1fr;
+    column-gap: 2px;
+    user-select: none;
+    background: rgba(29, 29, 29, 1.0);
+    min-height: 56px;
+    border-bottom: rgba(38, 38, 38, 1.0);
+}
+
+.css-9871a0-StatusAndHomeTeamWrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    min-width: 0px;
+    margin-left: -20px;
+}
+
+.css-k083tz-StatusLSMatchWrapperCSS {
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: max-content;
+    row-gap: 5px;
+    justify-items: center;
+    justify-self: center;
+}
+
+@media (min-width: 769px) {
+    .css-gn249o-AwayTeamAndFollowWrapper {
+        padding-right: 8px;
+    }
+}
+
+.css-gn249o-AwayTeamAndFollowWrapper {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    min-width: 0px;
+    margin-left: 20px;
+}
