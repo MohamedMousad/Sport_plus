@@ -15,14 +15,14 @@ namespace SportPlus.BLL.ModelVM.User
         [MinLength(3, ErrorMessage = "Name must be greater than 3 characters")]
         public required string FullName { get; set; }
         [Required]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public required string Password { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
         [Required]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public IFormFile? FormFile { get; set; }
         public string? Country { get; set; }
         public bool IsDeleted { get; set; } = false;

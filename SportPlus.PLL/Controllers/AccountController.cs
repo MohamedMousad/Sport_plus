@@ -1,34 +1,24 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using System.Net.Mail;
-using System.Security.Claims;
-using SportPlus.DAL.Entities;
-using SportPlus.BLL.Service.Abstraction;
-using SportPlus.BLL.ModelVM.Account;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using SportPlus.BLL.ModelVM.Account;
 using SportPlus.BLL.ModelVM.User;
+using SportPlus.BLL.Service.Abstraction;
+using SportPlus.DAL.Entities;
+using System.Security.Claims;
 
 namespace SportPlus.PLL.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration, IAccountService userService) : Controller
     {
 
         // repo 
-        private SignInManager<User> _signInManager;
-        private UserManager<User> _userManager;
-        private readonly IAccountService userService;
-        private IConfiguration _configuration;
-        //failed repo
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration, IAccountService userService)
-        {
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _configuration = configuration;
-            this.userService = userService;
-        }
+        private readonly SignInManager<User> _signInManager = signInManager;
+        private readonly UserManager<User> _userManager = userManager;
+        private readonly IAccountService userService = userService;
+        private readonly IConfiguration _configuration = configuration;
+
         //CRUD
         //1 represent profile of user 
         public async Task<IActionResult> Profile()
@@ -174,7 +164,7 @@ namespace SportPlus.PLL.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View(new RegistrationVM());
+            return View();
         }
 
         [HttpPost]
@@ -210,10 +200,10 @@ namespace SportPlus.PLL.Controllers
 
         // email confirmation
 
-        public async Task<IActionResult> EmailConfirmation()
+        public Task<IActionResult> EmailConfirmation()
         {
             var confirmEmail = new ConfirmEmailLoginVM();
-            return View(confirmEmail);
+            return Task.FromResult<IActionResult>(View(confirmEmail));
         }
 
         public async Task<IActionResult> SendEmailConfirmation(ConfirmEmailLoginVM confirmEmailLoginVM)
@@ -239,7 +229,7 @@ namespace SportPlus.PLL.Controllers
                 var emailContentHtml = $"Hello from  Medical Hospital Please, click this link to verify your account: <a href=\"{userConfirmationLink}\"> Verify your account </a> ";
 
                 var emailRequest = MailHelper.CreateSingleEmail(fromEmailAddress, toEmailAddress, emailSubject, emailContentTxt, emailContentHtml);
-                var emailResponse = await sendGridClient.SendEmailAsync(emailRequest);
+                await sendGridClient.SendEmailAsync(emailRequest);
 
                 TempData["EmailConfirmation"] = "Thank you! Please, check your email to verify your account";
 
@@ -259,8 +249,7 @@ namespace SportPlus.PLL.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var result = await _userManager.ConfirmEmailAsync(user, userConfirmationToken);
-
+            await _userManager.ConfirmEmailAsync(user, userConfirmationToken);
             TempData["EmailConfirmationVerified"] = "Thank you! Your account has been confirmed. You can now log in!";
             return RedirectToAction("Login", "Account");
         }
@@ -276,41 +265,44 @@ namespace SportPlus.PLL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid && model != null && !string.IsNullOrEmpty(model.Email))
+            {
+                // Find the user by email
+
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    // Display success even if the user doesn't exist to avoid revealing user information
+                    return View("ForgotPasswordConfirmation");
+                }
+
+                // Generate the password reset token
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                // Create the password reset link
+                var resetLink = Url.Action("ResetPassword", "Account", new { token = resetToken, email = model.Email }, Request.Scheme);
+
+                // Send password reset email (You can use SendGrid here like you did for email confirmation)
+                var apiKey = _configuration["SendGrid:ShortlyKey"];
+                var sendGridClient = new SendGridClient(apiKey);
+
+                var fromEmailAddress = new EmailAddress(_configuration["SendGrid:FromAddress"], "Hospital App");
+                var emailSubject = "Reset your password";
+                var toEmailAddress = new EmailAddress(model.Email);
+
+                var emailContentTxt = $"Please, click this link to reset your password: {resetLink}";
+                var emailContentHtml = $"Please, click this link to reset your password: <a href=\"{resetLink}\"> Reset Password </a>";
+
+                var emailRequest = MailHelper.CreateSingleEmail(fromEmailAddress, toEmailAddress, emailSubject, emailContentTxt, emailContentHtml);
+                await sendGridClient.SendEmailAsync(emailRequest);
+
+                // Show confirmation page
+                return View("ForgotPasswordConfirmation");
+            }
+            else
             {
                 return View(model);
             }
-
-            // Find the user by email
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                // Display success even if the user doesn't exist to avoid revealing user information
-                return View("ForgotPasswordConfirmation");
-            }
-
-            // Generate the password reset token
-            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            // Create the password reset link
-            var resetLink = Url.Action("ResetPassword", "Account", new { token = resetToken, email = model.Email }, Request.Scheme);
-
-            // Send password reset email (You can use SendGrid here like you did for email confirmation)
-            var apiKey = _configuration["SendGrid:ShortlyKey"];
-            var sendGridClient = new SendGridClient(apiKey);
-
-            var fromEmailAddress = new EmailAddress(_configuration["SendGrid:FromAddress"], "Hospital App");
-            var emailSubject = "Reset your password";
-            var toEmailAddress = new EmailAddress(model.Email);
-
-            var emailContentTxt = $"Please, click this link to reset your password: {resetLink}";
-            var emailContentHtml = $"Please, click this link to reset your password: <a href=\"{resetLink}\"> Reset Password </a>";
-
-            var emailRequest = MailHelper.CreateSingleEmail(fromEmailAddress, toEmailAddress, emailSubject, emailContentTxt, emailContentHtml);
-            var emailResponse = await sendGridClient.SendEmailAsync(emailRequest);
-
-            // Show confirmation page
-            return View("ForgotPasswordConfirmation");
         }
 
         public IActionResult ForgotPasswordConfirmation()
@@ -323,12 +315,16 @@ namespace SportPlus.PLL.Controllers
         [HttpGet]
         public IActionResult ResetPassword(string token, string email)
         {
+            ResetPasswordVM model = new();
             if (token == null || email == null)
             {
                 ModelState.AddModelError("", "Invalid password reset token.");
             }
-
-            var model = new ResetPasswordVM { Token = token, Email = email };
+            else
+            {
+                model.Token = token;
+                model.Email = email;
+            }
             return View(model);
         }
 
@@ -377,7 +373,7 @@ namespace SportPlus.PLL.Controllers
             return new ChallengeResult(provider, properties);
         }
 
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = "", string remoteError = "")
+        public async Task<IActionResult> ExternalLoginCallback(string remoteError = "")
         {
 
             var loginVM = new LoginVM()
@@ -421,13 +417,13 @@ namespace SportPlus.PLL.Controllers
                         };
 
                         await _userManager.CreateAsync(user);
-                      //  await _userManager.AddToRoleAsync(user, "User");
+                        //  await _userManager.AddToRoleAsync(user, "User");
                     }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
                     TempData["ExternalLoginCallback"] = "Please,Complete the required information";
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
 
             }

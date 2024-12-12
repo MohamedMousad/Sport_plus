@@ -1,7 +1,7 @@
 ﻿@SportPlus.PLL_HostAddress = https://localhost:7009
 
 ### get all fixtures in the day ###
-GET https://v3.football.api-sports.io/fixtures?&date=2024-12-01
+GET https://v3.football.api-sports.io/fixtures?&date=2024-12-13
     x-rapidapi-key: 94cad5d0fdf6426e72bf730032dbced9
     x-rapidapi-host: v3.football.api-sports.io
 
@@ -10,8 +10,13 @@ GET https://v3.football.api-sports.io/standings&?date=2022-12-02
     x-rapidapi-key: 94cad5d0fdf6426e72bf730032dbced9
     x-rapidapi-host: v3.football.api-sports.io
     
+###
 GET https://v3.football.api-sports.io/standings?date=2024-12-01
     x-rapidapi-key: 94cad5d0fdf6426e72bf730032dbced9
     x-rapidapi-host: v3.football.api-sports.io
 
+### get all fixtures in the day ###
+GET https://v3.football.api-sports.io/leagues?current=true
+    x-rapidapi-key: 94cad5d0fdf6426e72bf730032dbced9
+    x-rapidapi-host: v3.football.api-sports.io
 

@@ -11,16 +11,16 @@ namespace SportPlus.BLL.ModelVM.User
     {
 
         [Required, EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required]
-        public string OldPassword { get; set; }
+        public required string OldPassword { get; set; }
 
         [Required]
         [MinLength(6, ErrorMessage = "New password must be at least 6 characters long.")]
-        public string NewPassword { get; set; }
+        public required string NewPassword { get; set; }
         [Required]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-        public string ConfirmNewPassword { get; set; }
+        public required string ConfirmNewPassword { get; set; }
     }
 }
