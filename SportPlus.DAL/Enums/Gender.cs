@@ -9,6 +9,7 @@ namespace SportPlus.DAL.Enums
     public enum Gender
     {
         male = 1,
-        female = 2
+        female = 2,
+        notset = 3
     }
 }

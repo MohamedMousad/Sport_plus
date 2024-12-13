@@ -2,11 +2,26 @@
 
 namespace SportPlus.PLL.Models
 {
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class TeamRoot
     {
-        public Response Response { get; set; }
+        public TeamResponse? Response { get; set; }
     }
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class TeamResponse
+    {
+        public League? League { get; set; }
+        public Team? Team { get; set; }
+        public string? Form { get; set; }
+        public Fixtures? Fixtures { get; set; }
+        public Goals? Goals { get; set; }
+        public Biggest? Biggest { get; set; }
+        public CleanSheet? CleanSheet { get; set; }
+        public FailedToScore? FailedToScore { get; set; }
+        public Penalty? Penalty { get; set; }
+        public List<Lineup>? Lineups { get; set; }
+        public Cards? Cards { get; set; }
+    }
+
     public class _015
     {
         public int? Total { get; set; }
@@ -46,7 +61,7 @@ namespace SportPlus.PLL.Models
     public class _3145
     {
         public int? Total { get; set; }
-        public string Percentage { get; set; }
+        public string? Percentage { get; set; }
     }
 
     public class _35
@@ -76,7 +91,7 @@ namespace SportPlus.PLL.Models
     public class _7690
     {
         public int? Total { get; set; }
-        public string Percentage { get; set; }
+        public string? Percentage { get; set; }
     }
 
     public class _91105
@@ -258,21 +273,6 @@ namespace SportPlus.PLL.Models
         public _106120? _106120 { get; set; }
     }
 
-    public class TeamResponse
-    {
-        public League? League { get; set; }
-        public Team? Team { get; set; }
-        public string? Form { get; set; }
-        public Fixtures? Fixtures { get; set; }
-        public Goals? Goals { get; set; }
-        public Biggest? Biggest { get; set; }
-        public CleanSheet? CleanSheet { get; set; }
-        public FailedToScore? FailedToScore { get; set; }
-        public Penalty? Penalty { get; set; }
-        public List<Lineup>? Lineups { get; set; }
-        public Cards? Cards { get; set; }
-    }
-
 
     public class Scored
     {
@@ -352,6 +352,4 @@ namespace SportPlus.PLL.Models
         [JsonProperty("106-120")]
         public _106120? _106120 { get; set; }
     }
-
-
 }

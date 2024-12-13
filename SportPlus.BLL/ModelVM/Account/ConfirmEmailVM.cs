@@ -6,7 +6,7 @@ namespace SportPlus.BLL.ModelVM.Account
         [Required(ErrorMessage = "Email address is required")]
         [EmailAddress(ErrorMessage = "Email address is not valid")]
         //[CustomEmailValidator(ErrorMessage = "Email address is not valid (custom)")]
-        public string EmailAddress { get; set; }
+        public string? EmailAddress { get; set; }
     }
 
 }
