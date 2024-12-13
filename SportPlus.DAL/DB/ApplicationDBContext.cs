@@ -18,7 +18,7 @@ namespace SportPlus.DAL.DB
 		}
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Server=.;Database=Sport_Plus;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False");
+			optionsBuilder.UseSqlServer("Server=M10\\SQLEXPRESS;Database=Sport_Plus;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False");
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
