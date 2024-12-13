@@ -36,10 +36,10 @@ namespace SportPlus.PLL.Controllers
             var Fixtures = JsonConvert.DeserializeObject<FixtureResponse>(rawJson);
             return View(Fixtures);
         }
-        public async Task<IActionResult> StandingAsync()
+        public async Task<IActionResult> Standings()
         {
             var leagues = new[] { 39, 140, 135, 78, 61, 88 }; // Enum values for the leagues
-            var tasks = leagues.Select(league => _client.GetAsync($"standings?league={league}&season=2022")).ToArray();
+            var tasks = leagues.Select(league => _client.GetAsync($"standings?league={league}&season=2021")).ToArray();
             var responses = await Task.WhenAll(tasks);
 
             foreach (var response in responses)

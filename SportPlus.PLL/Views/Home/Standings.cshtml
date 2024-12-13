@@ -1,7 +1,63 @@
-﻿
+﻿@model List<StandingRoot?>
 @{
     ViewData["Title"] = "Standings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Standings</h1>
+<!-- Right table of the current match -->
+<div class="col-lg-6">
+    <div class="widget-next-match">
+        @foreach (var root in Model)
+        {
+            if (root != null && root.Response?.Count > 0)
+            {
+                foreach (var leagueResponse in root.Response)
+                {
+                    var league = leagueResponse.League;
+                    if (league != null && league.Standings?.Count > 0)
+                    {
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="7">
+                                        <img src="@league.Logo" alt="@league.Name Logo" style="height: 30px;" />
+                                        @league.Name
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Team</th>
+                                    <th>P</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>PTS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var standing in league.Standings[0])
+                                {
+                                    <tr>
+                                        <td>@standing.Rank</td>
+                                        <td>
+                                            <strong class="text-white">
+                                                <img src="@standing.Team.Logo" alt="@standing.Team.Name Logo" style="height: 20px;" />
+                                                @standing.Team.Name
+                                            </strong>
+                                        </td>
+                                        <td>@standing.All?.Played</td>
+                                        <td>@standing.All?.Win</td>
+                                        <td>@standing.All?.Draw</td>
+                                        <td>@standing.All?.Lose</td>
+                                        <td>@standing.Points</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            }
+        }
+    </div>
+</div>
