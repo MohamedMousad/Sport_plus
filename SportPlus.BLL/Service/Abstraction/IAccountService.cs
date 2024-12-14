@@ -11,11 +11,11 @@ using SportPlus.DAL.Entities;
 
 namespace SportPlus.BLL.Service.Abstraction
 {
-    public interface IAccountService
+	public interface IAccountService
     {
-        Task<ModelVM.Account.UserProfileVM> GetProfile(ClaimsPrincipal user);
+        Task<UserProfileVM> GetProfile(ClaimsPrincipal user);
         Task<EditUserVM> GetUserForEdit(ClaimsPrincipal user);
-        Task<UserVM> GetUserForMoreInfo(ClaimsPrincipal user);
+        Task<UserProfileVM> GetUserForMoreInfo(ClaimsPrincipal user);
         Task<IdentityResult> UpdateUser(ClaimsPrincipal user, EditUserVM model);
         Task<User> GetCurrentUser(ClaimsPrincipal user);
         Task<IdentityResult> DeleteUserAccount(ClaimsPrincipal user);

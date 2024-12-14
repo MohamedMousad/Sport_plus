@@ -27,6 +27,9 @@ namespace SportPlus.BLL.ModelVM.Account
 		
 		public string? PhoneNumber { get; set; }
 
+		public string? Country { get; set; }
+
+		public FavouriteTeam? FavouriteTeam { get; set; }
 
 		public Gender? Gender { get; set; } = DAL.Enums.Gender.notset;
 

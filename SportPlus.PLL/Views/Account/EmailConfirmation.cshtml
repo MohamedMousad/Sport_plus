@@ -5,22 +5,124 @@
     ViewData["Title"] = "EmailConfirmation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction:column;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+
+    }
+
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+        .hero img {
+            width: 100%;
+            height: 800px;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+        }
+
+    #colorForm {
+        width: 300px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.13);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        backdrop-filter: blur(10px);
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top:-370px;
+        height:300px;
+    }
+
+        #colorForm h4 {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+
+        #colorForm .form-group {
+            margin-bottom: 15px;
+        }
+
+            #colorForm .form-group label {
+                display: block;
+                font-size: 14px;
+                color: white;
+                margin-bottom: 5px;
+            }
+
+            #colorForm .form-group input {
+                width: 100%;
+                padding: 8px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+                #colorForm .form-group input:focus {
+                    border-color: #e2b6b6;
+                    outline: none;
+                    box-shadow: 0 0 3px #e2b6b6;
+                }
+        .eltabey{
+              color:white;
+        }
+
+
+        #colorForm .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #d23131;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            #colorForm .btn:hover {
+                background-color: #e21b1b;
+            }
+
+        #colorForm .form-text {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        footer{
+            margin-top:300px;
+        }
+</style>
+
+<img src="~/images/bg_3.jpg" />
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <h4 class="form-header">Confirm your account</h4>
-
         <div class="row">
             <div class="col-md-8 offset-md-2">
 
-                <form asp-controller="Account"
-                      asp-action="SendEmailConfirmation">
+                <form asp-controller="Account" asp-action="SendEmailConfirmation" id="colorForm" >
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
                     <div class="form-group mb-3">
                         <label for="emailAddress">Email address</label>
-                        <input type="email" asp-for="EmailAddress" class="form-control" id="emailAddress" placeholder="Enter email" />
-                        <small id="emailAddressSm" class="form-text text-muted">We'll never share your email with anyone else.</small> <br />
+                        <input type="email" asp-for="EmailAddress" id="emailAddress" placeholder="Enter email" />
+                        <small id="emailAddressSm" class="eltabey">We'll never share your email with anyone else.</small> <br />
                         <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     </div>
 
@@ -28,6 +130,14 @@
                         Send confirmation email
                     </button>
                 </form>
+                 <script>
+        function changeColor() {
+            const form = document.getElementById('colorForm');
+            form.style.backgroundColor = 'lightblue'; // Change the background color
+            form.style.color = 'darkblue'; // Change the text color
+            form.style.borderColor = 'blue'; // Change the border color
+                                }
+            </script>
             </div>
         </div>
     </div>

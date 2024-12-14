@@ -221,12 +221,12 @@ namespace SportPlus.PLL.Controllers
                 var apiKey = _configuration["SendGrid:ShortlyKey"];
                 var sendGridClient = new SendGridClient(apiKey);
 
-                var fromEmailAddress = new EmailAddress(_configuration["SendGrid:FromAddress"], "Hospital App");
+                var fromEmailAddress = new EmailAddress(_configuration["SendGrid:FromAddress"], "SportPlus");
                 var emailSubject = "[Shortly] Verify your account";
                 var toEmailAddress = new EmailAddress(confirmEmailLoginVM.EmailAddress);
 
-                var emailContentTxt = $"Hello from Medical Hospital Please, click this link to verify your account: {userConfirmationLink}";
-                var emailContentHtml = $"Hello from  Medical Hospital Please, click this link to verify your account: <a href=\"{userConfirmationLink}\"> Verify your account </a> ";
+                var emailContentTxt = $"Hello from SportPlus Please, click this link to verify your account: {userConfirmationLink}";
+                var emailContentHtml = $"Hello from  SportPlus Please, click this link to verify your account: <a href=\"{userConfirmationLink}\"> Verify your account </a> ";
 
                 var emailRequest = MailHelper.CreateSingleEmail(fromEmailAddress, toEmailAddress, emailSubject, emailContentTxt, emailContentHtml);
                 await sendGridClient.SendEmailAsync(emailRequest);
@@ -286,7 +286,7 @@ namespace SportPlus.PLL.Controllers
                 var apiKey = _configuration["SendGrid:ShortlyKey"];
                 var sendGridClient = new SendGridClient(apiKey);
 
-                var fromEmailAddress = new EmailAddress(_configuration["SendGrid:FromAddress"], "Hospital App");
+                var fromEmailAddress = new EmailAddress(_configuration["SendGrid:FromAddress"], "SportPlus");
                 var emailSubject = "Reset your password";
                 var toEmailAddress = new EmailAddress(model.Email);
 

@@ -3,8 +3,43 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+
+    .social {
+        display: flex;
+        flex-direction:row;
+        justify-content:space-between;
+    }
+
+        .social div {
+            width: 150px;
+            border-radius: 3px;
+            padding: 5px 10px 10px 5px;
+            color: #eaf0fb;
+            text-align: center;
+        }
+
+        .social .go {
+
+            margin-top: 10px;
+        }
+
+        .social .fb {
+            margin-top: 20px;
+
+            margin-bottom:25px;
+        }
+
+        .social i {
+            margin-right: 4px;
+        }
+        .pass{
+            margin-top:20px;
+        }
+</style>
  <body>
-    <div class="hero overlay" style="background-image: url('~/images/bg_3.jpg');">
+    <div class="hero overlay">
+        <img src="~/images/bg_3.jpg" />
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-5 mx-auto text-center">
@@ -22,22 +57,24 @@
 
         <label for="Password">Password</label>
         <input type="password" value="" asp-for="Password" placeholder="Password" id="password" name="password">
-        <a asp-controller="Account" asp-action="ForgotPassword">Forgot your password?</a>
+        <a asp-controller="Account" asp-action="ForgotPassword" class="pass">Forgot your password?</a>
         <button type="submit">Log In</button>
-        <p>Or Login With Social Media:</p>
+        <p class="pass" >Or Login With Social Media:</p>
+
         <div class="social">
             <div class="go">
                 <a href="/Account/ExternalLogin?provider=Google">
                     <img src="~/images/icons8-google-logo-30 (1).png" alt="Google Logo">
                 </a>
             </div>
-        </div>
+
         <div class="fb">
             <a href="/Account/ExternalLogin?provider=Facebook">
                 <img src="~/images/icons8-facebook-logo-30.png" alt="Facebook Logo">
             </a>
         </div>
+        </div>
+        </div>
     </form>
+
 </body>
-
-

@@ -1,150 +1,116 @@
 ﻿@model EditUserVM
 @{
-    ViewData["Title"] = "UpdateProfile";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "UpdateProfile";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@* <div class="container mt-5"> *@
-@*     <div class="row justify-content-center"> *@
-@*         <div class="col-md-8"> *@
-@*             <div class="card shadow-sm"> *@
-@*                 <div class="card-header bg-primary text-white text-center"> *@
-@*                     <h3>Update Your Profile</h3> *@
-@*                 </div> *@
-@*                 <div class="card-body"> *@
-@*                     <form asp-action="UpdateProfile" asp-controller="Account" method="post" enctype="multipart/form-data"> *@
-@*                         <div class="form-group mb-3"> *@
-@*                             <label asp-for="UserName" class="control-label"></label> *@
-@*                             <input asp-for="UserName" class="form-control" /> *@
-@*                             <span asp-validation-for="UserName" class="text-danger"></span> *@
-@*                         </div> *@
-@*                         <div class="form-group mb-3"> *@
-@*                             <label asp-for="Email" class="control-label"></label> *@
-@*                             <input asp-for="Email" class="form-control" value=@Model.Email/> *@
-@*                             <span asp-validation-for="Email" class="text-danger"></span> *@
-@*                         </div> *@
-@*                         <div class="form-group mb-3"> *@
-@*                             <label asp-for="PhoneNumber" class="control-label"></label> *@
-@*                             <input asp-for="PhoneNumber" class="form-control" /> *@
-@*                             <span asp-validation-for="PhoneNumber" class="text-danger"></span> *@
-@*                         </div> *@
-                   
-@*                         <div class="form-group mb-3"> *@
-@*                             <label for="NewProfileImage">Profile Image</label> *@
-@*                             <input type="file" class="form-control" asp-for="NewProfileImage" /> *@
-@*                         </div> *@
-@*                         <div class="d-flex justify-content-between mt-4"> *@
-@*                             <button type="submit" class="btn btn-success">Update</button> *@
-@*                             <a asp-action="ChangePassword" asp-controller="Account" class="btn btn-warning text-white">Reset Password</a> *@
-@*                             <a asp-action="Index" asp-controller="Home" class="btn btn-danger">Cancel</a> *@
-@*                         </div> *@
-@*                     </form> *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> *@
-@* </div> *@
-
-@* :""اربطوني *@ 
+<style>
+.Update {
+		margin-top: 100px;
+		width: 4000px;
+}	
+</style>
 <body>
-    <header class="site-navbar py-4" role="banner">
-        <section class="sec">
-                <div class="d-flex align-items-center">
-                  <div class="site-logo">
-                    <a href="index.html">
-                      <img src="images\flamingtext_com-208494727.png" alt="Logo" width="170px" height="60px">
-                    </a>
-                  </div>
-                  <div class="ml-auto">
-                    <nav class="site-navigation position-relative text-right" role="navigation">
-                      <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                        <li><a href="index.html" class="nav-link">Home</a></li>
-                        <li><a href="matches.html" class="nav-link">Matches</a></li>
-                        <li><a href="players.html" class="nav-link">Players</a></li>
-                        <li><a href="blog.html" class="nav-link">Log Out</a></li>
-                        <li class="active"><a href="Myprofile.html" class="nav-link">Myprofile</a></li>
-                      </ul>
-                    </nav>
-        
-                    <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
-                        class="icon-menu h3 text-white"></span></a>
-                  </div>
-                </div>
-              </section>
-        
-            </header>
-            
-    <section>
-        <div class="container py-5">
-          <div class="row">
-            <div class="col">
-             
-            </div>
-          </div>
-      <form>
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <div class="card-body text-center">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                    class="rounded-circle img-fluid" style="width: 150px;">
-                  <div class="my-3"> <input type="text" placeholder="Username" id="username" name="username"></div>
-                  <div class="text-muted mb-1"> <input type="text" placeholder="Info" id="info" name="info"></div>
-                  <div class="text-muted mb-4"> <input type="text" placeholder="Address" id="address" name="address"></div>
-                  <div class="d-flex justify-content-center mb-2">
-                  </div>
-                </div>
-                <div class = "Update-Profile">
-                  <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
-                  </div>
-              </div>
-              </div>
-            <div class="col-lg-8">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0">Full Name</p>
-                    </div>
-                    <div class="col-sm-9">
-                      <div class="text-muted mb-0"> <input type="text" placeholder="Full Name" id="fullname" name="fullname"></div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0">Email</p>
-                    </div>
-                    <div class="col-sm-9">
-                      <div class="text-muted mb-0"> <input type="text" placeholder="Email" id="email" name="email"></div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0">Phone</p>
-                    </div>
-                    <div class="col-sm-9">
-                      <div class="text-muted mb-0"> <input type="text" placeholder="Phone Number" id="phone" name="phone"></div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0">Favourite Team</p>
-                    </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0"> <input type="text" placeholder="Favourite Team" id="favourite-team" name="favourite-team"></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
-              </div>
-            </form>
-            </div>
-            </section>
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<header class="site-navbar py-4" role="banner">
+		<section class="sec">
+			<div class="d-flex align-items-center">
+				<div class="site-logo">
+				</div>
+				<div class="ml-auto">
+
+
+					<a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white">
+						<span class="icon-menu h3 text-white"></span>
+					</a>
+				</div>
+			</div>
+		</section>
+
+	</header>
+
+	<section>
+		<form asp-controller="Account" asp-action="UpdateProfile" calss="Update" method="post">
+			<div class="container py-5">
+				<div class="row">
+		<div class="container py-5">
+			<div class="row">
+				<div class="col">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="card mb-4">
+						<div class="card-body text-center">
+							<img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+								 class="rounded-circle img-fluid" style="width: 150px;">
+							<div class="my-3"> <input type="text" placeholder="Username" id="username" asp-for="UserName"></div>
+							<div class="text-muted mb-1"> <input type="text" placeholder="Info" id="info" name="info"></div>
+							<div class="text-muted mb-4"> <input type="text" placeholder="Address" id="address" asp-for="Country"></div>
+							<div class="d-flex justify-content-center mb-2">
+							</div>
+						</div>
+						<div class="Update-Profile">
+							<button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8">
+					<div class="card mb-4">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Full Name</p>
+								</div>
+								<div class="col-sm-9">
+									<div class="text-muted mb-0"> <input type="text" placeholder="Full Name" id="fullname" asp-for="FullName"></div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Email</p>
+								</div>
+								<div class="col-sm-9">
+									<div class="text-muted mb-0"> <input type="text" placeholder="Email" id="email" asp-for="Email"></div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Phone</p>
+								</div>
+								<div class="col-sm-9">
+									<div class="text-muted mb-0"> <input type="text" placeholder="Phone Number" id="phone" asp-for="PhoneNumber"></div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Favourite Team</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0"> <input type="text" placeholder="Favourite Team" id="favourite-team" asp-for="FavouriteTeam"></p>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<p class="mb-0">Country</p>
+								</div>
+								<div class="col-sm-9">
+									<p class="text-muted mb-0"> <input type="text" placeholder="Favourite Team" id="favourite-team" asp-for="Country"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		</form>
+	</section>
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

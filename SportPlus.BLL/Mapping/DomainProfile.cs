@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using SportPlus.BLL.ModelVM.Account;
 using SportPlus.BLL.ModelVM.User;
+using SportPlus.BLL.Service.Abstraction;
+
 
 
 //using SportPlus.DAL
@@ -11,16 +13,16 @@ using SportPlus.BLL.ModelVM.User;
 using SportPlus.DAL.Entities;
 namespace SportPlus.BLL.Mapping
 {
-    public class DomainProfile : Profile
+	public class DomainProfile : Profile
     {
         public DomainProfile()
         {
             // User Mapper
             CreateMap<User, RegistrationVM>().ReverseMap();     
             CreateMap<LoginVM, User>().ReverseMap();
-            CreateMap<User, UserVM>().ReverseMap();
+            CreateMap<User, UserProfileVM>().ReverseMap();
             CreateMap<User, EditUserVM>().ReverseMap();
-            CreateMap<ModelVM.Account.UserProfileVM, User>().ReverseMap();
+            CreateMap<UserProfileVM, User>().ReverseMap();
         }
     }
 }

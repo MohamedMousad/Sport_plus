@@ -3,19 +3,28 @@
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body style="background-image: url('images/bg_3.jpg'); height: 1500; background-size: cover;">
+<style>
+    footer{
+        margin-top:500px;
+    }
+    h1{
+        margin-bottom:5px;
+    }
+</style>
+<body >
     <div class="hero overlay">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-5 mx-auto text-center">
-            <h1 class="text-white"></h1>
-            <p></p>
-          </div>
+        <img src="~/images/bg_3.jpg" style="height: 1900px;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mx-auto text-center">
+                    <h1 class="text-white"></h1>
+                    <p></p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    
-    <form id="loginForm" asp-controller="Account" asp-action="Register">
+    <form id="loginForm" asp-controller="Account" asp-action="Register" style="  height: 1200px;
+    width: 650px; margin-top:400px;">
 
       <h3>Create an Account</h3>
       <p style="margin-top:10px ;text-align: center;">Sign up with your scoial Media Account or Email address</p>
@@ -24,47 +33,79 @@
         <div class="go"><button><a href = "#"><img src = "~/images/icons8-google-logo-30 (1).png" width="30px" height="30px"></button></a></div>
         <div class="fb"><button><a href = "#"><img src = "~/images/icons8-facebook-logo-30.png"  ></button></a></div>
       </div>
-     <h1>------------------------</h1>
+        <h1 style="text-align: center;">_</h1>
       <div class="username">
         <label for="UserName">Username</label>
         <input type="text" asp-for="UserName" placeholder=" username" id="username" required>
-  
       </div>
+
         <div class="Fullname">
             <label for="Fullname">Fullname</label>
             <input type="text" asp-for="FullName" placeholder=" username" id="username" required>
-
         </div>
      <div class="email">
-      
+
       <label for ="Email">Email</label>
       <input asp-for="Email" type="email" placeholder="Email" id="email" required>
 
     </div>
+
       <div class="phone">
       <label for="PhoneNumber">Phone</label>
       <input asp-for="PhoneNumber" type="number" placeholder="Phone" id="phone" required>
       </div>
-      <div class="Age">
-            <label for="Gender">Gender</label>
-        <input asp-for="Gender" type="text" placeholder="Gender" id="Gender" required>
 
-      </div>
-      
+        <div class="Gender">
+            <label for="Gender">Gender</label>
+            <select asp-for="Gender" id="Gender" required>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="">Select Gender</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Female">Female</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Male">Male</option>
+            </select>
+        </div>
+
+        <div class="Country">
+            <label for="Country">Country</label>
+            <input type="text" asp-for="Country" placeholder=" Country" id="Country" required>
+
+        </div>
+
+        <div class="FavoriteTeam">
+            <label for="FavoriteTeam">Favourite Team</label>
+            <select asp-for="FavouriteTeam" id="FavoriteTeam" required>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="">Select FavoriteTeam</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="ManchesterUnited">Manchester United</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Chelsea">Chelsea FC</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Arsenal">Arsenal</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Liverpool">Liverpool</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="ManchesterCity">Manchester City </option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="TottenhamHotspur">Tottenham Hotspur</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="BayernMunchen">Bayern Munchen</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="BorussiaDortmund">Borussia Dortmund</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="RealMadrid">Real Madrid</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Barcelona">Barcelona</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Juventus">Juventus</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Napoli">Napoli</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Roma">Roma</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="Acmilan">AC Milan</option>
+                <option class="list-group-item list-group-item-action list-group-item-secondary" value="ParisSaintGermain">Paris Saint-Germain</option>
+            </select>
+        </div>
+
+
       <div class="password">
        <label for="Password">Password</label>
       <input asp-for="Password" type="password" placeholder="Password" id="password" required>
+      </div>
 
+        <div class="ConfirmPassword">
       <label for="ConfirmPassword">Confirm Password</label>
       <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" id="password" required>
       </div>
 
-        <div class="form-group mb-3">
-            <label asp-for="ProfileImage">Upload Profile Image</label>
-            <input asp-for="ProfileImage" type="file" class="form-control" />
-        </div>
+
 
       <button  type="submit">Sign Up</button>
+      </div>
     </form>
   </body>
-
