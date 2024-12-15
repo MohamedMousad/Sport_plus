@@ -1,4 +1,5 @@
-﻿@model FixtureResponse
+﻿@using SportPlus.DAL.Enums
+@model Tuple<FixtureResponse? , FavouriteTeam?>
 @{
     var leagueId = new List<int> { 39, 140, 61, 78, 135, 2 };
     ViewData["Title"] = "Home";
@@ -64,7 +65,7 @@
         @foreach (var l in leagueId)
         {
             bool flag = false; // Move flag inside the league loop
-            foreach (var fixture in Model?.Response)
+            foreach (var fixture in Model?.Item1.Response)
             {
                 if (fixture?.League?.Id == l)
                 {
@@ -82,7 +83,7 @@
                     }
                     <!-- Render individual fixture -->
                     <div class="css-97a72h-LeagueMatchesWrapper e1rcfwkv0">
-                        <a href="/matches/mallorca-vs-celta-vigo/2uof5k#4506907" class="css-s4hjf6-MatchWrapper e1ek4pst2">
+                        <a href="javascript:void(0);" onclick="validateMatchStatus(@fixture.Fixture.Status.Elapsed, '@Url.Action("MatchStats", "Home", new { id = fixture.Fixture.Id })')" class="css-s4hjf6-MatchWrapper e1ek4pst2">
                             <div class="css-9871a0-StatusAndHomeTeamWrapper e1ek4pst4">
                                 <div class="css-1v13k0i-TeamBlockCSS emmmxv01">
                                     <span class="css-1wtw6ba-TeamName emmmxv00">@fixture.Teams?.Home?.Name</span>
@@ -90,9 +91,33 @@
                                 </div>
                             </div>
                             <div class="css-k083tz-StatusLSMatchWrapperCSS e5pc0pz0">
-                                <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
-                                    <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Fixture?.Date<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0">PM</span></div>
-                                </span>
+                                @if (fixture.Fixture.Status.Elapsed == null)
+                                {
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Fixture?.Date<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                    </span>
+                                }
+                                else if (fixture.Fixture.Status.Elapsed == 90 || fixture.Fixture.Status.Elapsed == 120)
+                                {
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">Full Time<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                    </span>
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Score?.Fulltime?.Home - @fixture.Score?.Fulltime?.Away<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">Live<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                    </span>
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Fixture.Status.Elapsed<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                    </span>
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Goals.Home - @fixture.Goals.Away<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                    </span>
+                                }
                             </div>
                             <div class="css-gn249o-AwayTeamAndFollowWrapper e1ek4pst5">
                                 <div class="css-so6otw-TeamBlockCSS emmmxv01">
@@ -105,88 +130,98 @@
                 }
             }
         }
-
     </div>
-    <!-- next match -->
-    <div class="site-section bg-dark">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="widget-next-match">
-                        <div class="widget-title">
-                            <h3>Next Match</h3>
-                        </div>
-                        <div class="widget-body mb-3">
-                            <div class="widget-vs">
-                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                                    <div class="team-1 text-center">
-                                        <img src="~/images/logo_1.png" alt="Image">
-                                        <h3>Team1</h3>
-                                    </div>
-                                    <div>
-                                        <span class="vs"><span>VS</span></span>
-                                    </div>
-                                    <div class="team-2 text-center">
-                                        <img src="~/images/logo_2.png" alt="Image">
-                                        <h3>Team2</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- match info -->
-                        <div class="text-center widget-vs-contents mb-4">
-                            <h4>World Cup League</h4>
-                            <p class="mb-5">
-                                <span class="d-block">December 20th, 2020</span>
-                                <span class="d-block">9:30 AM GMT+0</span>
-                                <strong class="text-primary">New Euro Arena</strong>
-                            </p>
-                            <!-- timer countdown  -->
-                            <div id="date-countdown2" class="pb-1"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- .site-section -->
-    <!-- beggining of 4 leagues -->
-    <div class="site-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-6 title-section">
-                    <h2 class="heading">Standings</h2>
-                </div>
-                <div class="col-6 text-right">
-                    <div class="custom-nav">
-                        <a href="#" class="js-custom-prev-v2"><span class="icon-keyboard_arrow_left"></span></a>
-                        <span></span>
-                        <a href="#" class="js-custom-next-v2"><span class="icon-keyboard_arrow_right"></span></a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- 4 tables of leagues here -->
-            <div class="owl-4-slider owl-carousel">
-                <div class="widget-next-match">
-                    <table class="table custom-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Team</th>
-                                <th>Pl</th>
-                                <th>PTS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>i</td>
-                                <td><strong class="text-white">team name</strong></td>
-                                <td>played</td>
-                                <td>points</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <script>
+        function validateMatchStatus(elapsed, url) {
+            if (elapsed == null) {
+                alert("The match hasn't started yet. You can't view the stats.");
+            } else {
+                window.location.href = url;
+            }
+        }
+    </script>
 </body>
+@*     <!-- next match --> *@
+@*     <div class="site-section bg-dark"> *@
+@*         <div class="container"> *@
+@*             <div class="row"> *@
+@*                 <div class="col-lg-6"> *@
+@*                     <div class="widget-next-match"> *@
+@*                         <div class="widget-title"> *@
+@*                             <h3>Next Match</h3> *@
+@*                         </div> *@
+@*                         <div class="widget-body mb-3"> *@
+@*                             <div class="widget-vs"> *@
+@*                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100"> *@
+@*                                     <div class="team-1 text-center"> *@
+@*                                         <img src="~/images/logo_1.png" alt="Image"> *@
+@*                                         <h3>Team1</h3> *@
+@*                                     </div> *@
+@*                                     <div> *@
+@*                                         <span class="vs"><span>VS</span></span> *@
+@*                                     </div> *@
+@*                                     <div class="team-2 text-center"> *@
+@*                                         <img src="~/images/logo_2.png" alt="Image"> *@
+@*                                         <h3>Team2</h3> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                         <!-- match info --> *@
+@*                         <div class="text-center widget-vs-contents mb-4"> *@
+@*                             <h4>World Cup League</h4> *@
+@*                             <p class="mb-5"> *@
+@*                                 <span class="d-block">December 20th, 2020</span> *@
+@*                                 <span class="d-block">9:30 AM GMT+0</span> *@
+@*                                 <strong class="text-primary">New Euro Arena</strong> *@
+@*                             </p> *@
+@*                             <!-- timer countdown  --> *@
+@*                             <div id="date-countdown2" class="pb-1"></div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> <!-- .site-section --> *@
+@*     <!-- beggining of 4 leagues --> *@
+@*     <div class="site-section"> *@
+@*         <div class="container"> *@
+@*             <div class="row"> *@
+@*                 <div class="col-6 title-section"> *@
+@*                     <h2 class="heading">Standings</h2> *@
+@*                 </div> *@
+@*                 <div class="col-6 text-right"> *@
+@*                     <div class="custom-nav"> *@
+@*                         <a href="#" class="js-custom-prev-v2"><span class="icon-keyboard_arrow_left"></span></a> *@
+@*                         <span></span> *@
+@*                         <a href="#" class="js-custom-next-v2"><span class="icon-keyboard_arrow_right"></span></a> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+
+@*             <!-- 4 tables of leagues here --> *@
+@*             <div class="owl-4-slider owl-carousel"> *@
+@*                 <div class="widget-next-match"> *@
+@*                     <table class="table custom-table"> *@
+@*                         <thead> *@
+@*                             <tr> *@
+@*                                 <th>#</th> *@
+@*                                 <th>Team</th> *@
+@*                                 <th>Pl</th> *@
+@*                                 <th>PTS</th> *@
+@*                             </tr> *@
+@*                         </thead> *@
+@*                         <tbody> *@
+@*                             <tr> *@
+@*                                 <td>i</td> *@
+@*                                 <td><strong class="text-white">team name</strong></td> *@
+@*                                 <td>played</td> *@
+@*                                 <td>points</td> *@
+@*                             </tr> *@
+@*                         </tbody> *@
+@*                     </table> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@* </body> *@

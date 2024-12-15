@@ -1,8 +1,101 @@
-﻿
+﻿@model MatchRoot?
 @{
-    ViewData["Title"] = "MatchStats";
+    ViewData["Title"] = "Match Statistics";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>MatchStats</h1>
+<h2>Match Statistics</h2>
 
+@foreach (var teamData in Model.Response)
+{
+    if (teamData != null)
+    {
+        <div>
+            <h3>@teamData.Team.Name</h3>
+            <img src="@teamData.Team.Logo" alt="@teamData.Team.Name logo" />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shots on Goal</td>
+                        <td>@teamData.FormattedStatistics.ShotsOnGoal</td>
+                    </tr>
+                    <tr>
+                        <td>Shots off Goal</td>
+                        <td>@teamData.FormattedStatistics.ShotsOffGoal</td>
+                    </tr>
+                    <tr>
+                        <td>Total Shots</td>
+                        <td>@teamData.FormattedStatistics.TotalShots</td>
+                    </tr>
+                    <tr>
+                        <td>Blocked Shots</td>
+                        <td>@teamData.FormattedStatistics.BlockedShots</td>
+                    </tr>
+                    <tr>
+                        <td>Shots Inside Box</td>
+                        <td>@teamData.FormattedStatistics.ShotsInsideBox</td>
+                    </tr>
+                    <tr>
+                        <td>Shots Outside Box</td>
+                        <td>@teamData.FormattedStatistics.ShotsOutsideBox</td>
+                    </tr>
+                    <tr>
+                        <td>Fouls</td>
+                        <td>@teamData.FormattedStatistics.Fouls</td>
+                    </tr>
+                    <tr>
+                        <td>Corner Kicks</td>
+                        <td>@teamData.FormattedStatistics.CornerKicks</td>
+                    </tr>
+                    <tr>
+                        <td>Offsides</td>
+                        <td>@teamData.FormattedStatistics.Offsides</td>
+                    </tr>
+                    <tr>
+                        <td>Ball Possession</td>
+                        <td>@teamData.FormattedStatistics.BallPossession</td>
+                    </tr>
+                    <tr>
+                        <td>Yellow Cards</td>
+                        <td>@teamData.FormattedStatistics.YellowCards</td>
+                    </tr>
+                    <tr>
+                        <td>Red Cards</td>
+                        <td>@teamData.FormattedStatistics.RedCards</td>
+                    </tr>
+                    <tr>
+                        <td>Goalkeeper Saves</td>
+                        <td>@teamData.FormattedStatistics.GoalkeeperSaves</td>
+                    </tr>
+                    <tr>
+                        <td>Total Passes</td>
+                        <td>@teamData.FormattedStatistics.TotalPasses</td>
+                    </tr>
+                    <tr>
+                        <td>Passes Accurate</td>
+                        <td>@teamData.FormattedStatistics.PassesAccurate</td>
+                    </tr>
+                    <tr>
+                        <td>Passes Percentage</td>
+                        <td>@teamData.FormattedStatistics.PassesPercentage</td>
+                    </tr>
+                    <tr>
+                        <td>Expected Goals</td>
+                        <td>@teamData.FormattedStatistics.ExpectedGoals</td>
+                    </tr>
+                    <tr>
+                        <td>Goals Prevented</td>
+                        <td>@teamData.FormattedStatistics.GoalsPrevented</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
