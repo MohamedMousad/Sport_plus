@@ -8,6 +8,7 @@ using SportPlus.BLL.Service.Abstraction;
 using SportPlus.DAL.Entities;
 using System.Configuration;
 using SportPlus.DAL.Enums;
+using System.Collections.Generic;
 
 namespace SportPlus.PLL.Controllers
 {
@@ -82,9 +83,12 @@ namespace SportPlus.PLL.Controllers
         public async Task<IActionResult> MatchStats(int id)
         {
             var response = await _client.GetAsync($"fixtures/statistics?&fixture={id}");
-            if (!response.IsSuccessStatusCode) return View("Error");
+            var response2 = await _client.GetAsync($"fixtures/lineups?&fixture={id}");
+            if (!response.IsSuccessStatusCode || !response2.IsSuccessStatusCode) return View("Error");
             string rawJson = await response.Content.ReadAsStringAsync();
+            string rawJson2 = await response2.Content.ReadAsStringAsync();
             var matchStatistics = JsonConvert.DeserializeObject<MatchRoot>(rawJson);
+            var lineup = JsonConvert.DeserializeObject<LineupRoot>(rawJson2);
             if (matchStatistics == null || matchStatistics.Response == null) return View("Error");
             foreach (var teamData in matchStatistics.Response)
             {
@@ -92,7 +96,8 @@ namespace SportPlus.PLL.Controllers
                 var ProcessedStatistics = MatchStatisticsMapper.MapStatistics(teamData.Statistics);
                 teamData.FormattedStatistics = ProcessedStatistics;
             }
-            return View(matchStatistics);
+            var model = Tuple.Create(matchStatistics, lineup);
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> TeamStatistics()
@@ -100,9 +105,9 @@ namespace SportPlus.PLL.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> TeamStatistics(int team , int season , int league)
+        public async Task<IActionResult> TeamStatistics(teamInput teamInput)
         {
-            var response = await _client.GetAsync($"teams/statistics?&league={league}&season={season}&team={team}");
+            var response = await _client.GetAsync($"teams/statistics?&league={teamInput.League}&season={teamInput.Season}&team={teamInput.Team}");
 
             if (!response.IsSuccessStatusCode)
             {

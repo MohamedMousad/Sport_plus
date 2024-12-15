@@ -1,0 +1,43 @@
+﻿@using SportPlus.DAL.Enums;
+@model teamInput
+@{
+    ViewData["Title"] = "TeamStatistics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container py-5">
+    <form asp-action="TeamStats" asp-controller="Home" method="post">
+        <div class="FavoriteTeam mb-4">
+            <label for="FavoriteTeam" class="form-label">Choose Team</label>
+            <select asp-for="Team" id="FavoriteTeam" class="form-select" required>
+                <option value="">Select FavoriteTeam</option>
+                @foreach (var team in Enum.GetValues(typeof(SportPlus.DAL.Enums.FavouriteTeam)))
+                {
+                    <option value="@team">@team</option>
+                }
+            </select>
+        </div>
+
+        <div class="League mb-4">
+            <label for="League" class="form-label">League</label>
+            <select asp-for="League" id="League" class="form-select" required>
+                <option value="">Select League</option>
+                @foreach (var league in Enum.GetValues(typeof(SportPlus.DAL.Enums.League)))
+                {
+                    <option value="@league">@league</option>
+                }
+            </select>
+        </div>
+
+        <div class="Season mb-4">
+            <label for="Season" class="form-label">Season</label>
+            <select asp-for="Season" id="Season" class="form-select" required>
+                <option value="">Select Season</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
