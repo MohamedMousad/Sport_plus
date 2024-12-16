@@ -56,7 +56,7 @@ namespace SportPlus.PLL.Controllers
         }
         public async Task<IActionResult> Standings()
         {
-            var leagues = new[] { 39, 140, 135, 78, 61, 88 }; // Enum values for the leagues
+            var leagues = new[] { 39, 140, 135, 78, 61, 2 }; // Enum values for the leagues
             var tasks = leagues.Select(league => _client.GetAsync($"standings?league={league}&season=2021")).ToArray();
             var responses = await Task.WhenAll(tasks);
 
@@ -119,6 +119,7 @@ namespace SportPlus.PLL.Controllers
 
             //Deserialize the raw JSON into the ApiResponse class
             var TeamStats = JsonConvert.DeserializeObject<TeamRoot>(value: rawJson);
+            var model = Tuple.Create(TeamStats, teamInput);
             return View(TeamStats);
         }
     }

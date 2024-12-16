@@ -4,6 +4,8 @@
     var leagueId = new List<int> { 39, 140, 61, 78, 135, 2 };
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_layout.cshtml";
+    var favouriteTeamFixture = Model?.Item1?.Response?.FirstOrDefault(f => ((f.Teams?.Home?.Id == (int?)Model?.Item2) || (f.Teams?.Away?.Id == (int?)Model?.Item2)));
+    var randomLiveFixture = Model?.Item1?.Response?.FirstOrDefault(f => f.Fixture?.Status?.Elapsed != null);
 }
 
 <body>
@@ -13,17 +15,17 @@
                 <div class="col-lg-5 ml-auto">
                     <h1 class="text-white">Incoming <br> Match</h1>
                     <div class="d-flex team-vs">
-                        <span class="score">Score</span>
+                        <span class="score"></span>
                         <div class="team-1 w-50">
                             <div class="team-details w-100 text-center">
-                                <img src="images/logo_1.png" alt="Image" class="img-fluid">
-                                <h3>team1 <span></span></h3>
+                                <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Logo ?? "images/logo_1.png")" alt="Image" class="img-fluid">
+                                @* <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "team1") <span></span></h3> *@
                             </div>
                         </div>
                         <div class="team-2 w-50">
                             <div class="team-details w-100 text-center">
-                                <img src="images/logo_2.png" alt="Image" class="img-fluid">
-                                <h3>team2 <span></span></h3>
+                                <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Logo ?? "images/logo_2.png")" alt="Image" class="img-fluid">
+                                @* <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "team2") <span></span></h3> *@
                             </div>
                         </div>
                     </div>
@@ -37,29 +39,30 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex team-vs">
-                    <span class="score">4-1</span>
+                    <span class="score">@((favouriteTeamFixture ?? randomLiveFixture)?.Score?.Fulltime?.Home ?? 0) - @((favouriteTeamFixture ?? randomLiveFixture)?.Score?.Fulltime?.Away ?? 0)</span>
                     <div class="team-1 w-50">
                         <div class="team-details w-100 text-center">
-                            <img src="~/images/logo_1.png" alt="Image" class="img-fluid">
-                            <h3>team1 <span></span></h3>
-                            <ul class="list-unstyled">
-                                <li>Anja Landry (7)</li>
-                            </ul>
+                            <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Logo ?? "images/logo_1.png")" alt="Image" class="img-fluid">
+                            <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "team1") <span></span></h3>
+                            @* <ul class="list-unstyled"> *@
+                            @*     <li>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "Player")</li> *@
+                            @* </ul> *@
                         </div>
                     </div>
                     <div class="team-2 w-50">
                         <div class="team-details w-100 text-center">
-                            <img src="~/images/logo_2.png" alt="Image" class="img-fluid">
-                            <h3> team2 <span></span></h3>
-                            <ul class="list-unstyled">
-                                <li>Macauly Green (3)</li>
-                            </ul>
+                            <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Logo ?? "images/logo_2.png")" alt="Image" class="img-fluid">
+                            <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "team2") <span></span></h3>
+                            @* <ul class="list-unstyled"> *@
+                            @*     <li>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "Player")</li> *@
+                            @* </ul> *@
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- fixtures -->
     <div class="css-1lleae-CardCSS e1mlfzv61">
         @foreach (var l in leagueId)

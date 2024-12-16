@@ -1,14 +1,14 @@
 ﻿@using SportPlus.DAL.Enums;
-@model teamInput
+@model Tuple<TeamRoot, teamInput>
 @{
     ViewData["Title"] = "TeamStatistics";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container py-5">
-    <form asp-action="TeamStats" asp-controller="Home" method="post">
+    <form asp-action="TeamStatistics" asp-controller="Home" method="post">
         <div class="FavoriteTeam mb-4">
             <label for="FavoriteTeam" class="form-label">Choose Team</label>
-            <select asp-for="Team" id="FavoriteTeam" class="form-select" required>
+            <select asp-for="Item2.Team" id="FavoriteTeam" class="form-select" required>
                 <option value="">Select FavoriteTeam</option>
                 @foreach (var team in Enum.GetValues(typeof(SportPlus.DAL.Enums.FavouriteTeam)))
                 {
@@ -19,7 +19,7 @@
 
         <div class="League mb-4">
             <label for="League" class="form-label">League</label>
-            <select asp-for="League" id="League" class="form-select" required>
+            <select asp-for="Item2.League" id="League" class="form-select" required>
                 <option value="">Select League</option>
                 @foreach (var league in Enum.GetValues(typeof(SportPlus.DAL.Enums.League)))
                 {
@@ -30,7 +30,7 @@
 
         <div class="Season mb-4">
             <label for="Season" class="form-label">Season</label>
-            <select asp-for="Season" id="Season" class="form-select" required>
+            <select asp-for="Item2.Season" id="Season" class="form-select" required>
                 <option value="">Select Season</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
@@ -40,4 +40,105 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    @if (Model.Item1 != null)
+    {
+        <div class="team-stats mt-5">
+            <h2>Team Statistics</h2>
+            <h3>@Model.Item1.Response.Team.Name</h3>
+            <img src="@Model.Item1.Response.Team.Logo" alt="@Model.Item1.Response.Team.Name logo" />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Matches Played</td>
+                        <td>@Model.Item1.Response.Fixtures.Played.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Wins</td>
+                        <td>@Model.Item1.Response.Fixtures.Wins.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Draws</td>
+                        <td>@Model.Item1.Response.Fixtures.Draws.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Losses</td>
+                        <td>@Model.Item1.Response.Fixtures.Loses.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Goals Scored</td>
+                        <td>@Model.Item1.Response.Goals.For.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Goals Conceded</td>
+                        <td>@Model.Item1.Response.Goals.Against.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Clean Sheets (Home)</td>
+                        <td>@Model.Item1.Response.CleanSheet.Home</td>
+                    </tr>
+                    <tr>
+                        <td>Clean Sheets (Away)</td>
+                        <td>@Model.Item1.Response.CleanSheet.Away</td>
+                    </tr>
+                    <tr>
+                        <td>Clean Sheets (Total)</td>
+                        <td>@Model.Item1.Response.CleanSheet.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Failed to Score (Home)</td>
+                        <td>@Model.Item1.Response.FailedToScore.Home</td>
+                    </tr>
+                    <tr>
+                        <td>Failed to Score (Away)</td>
+                        <td>@Model.Item1.Response.FailedToScore.Away</td>
+                    </tr>
+                    <tr>
+                        <td>Failed to Score (Total)</td>
+                        <td>@Model.Item1.Response.FailedToScore.Total</td>
+                    </tr>
+                    @الكروت ليها توقيات الدقايق فكل ربع ساعة في الماتشات اعرضوها لو عايزين لكن هي هتحتاج تتقسم حسب التوقيت @
+                    @* <tr> *@
+                    @*     <td>Yellow Cards</td> *@
+                    @*     <td>@Model.Item1.Response.Cards.Yellow.Total</td> *@
+                    @* </tr> *@
+                    @* <tr> *@
+                    @*     <td>Red Cards</td> *@
+                    @*     <td>@Model.Item1.Response.Cards.Red.Total</td> *@
+                    @* </tr> *@
+                    <tr>
+                        <td>Penalties Scored</td>
+                        <td>@Model.Item1.Response.Penalty.Scored.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Penalties Missed</td>
+                        <td>@Model.Item1.Response.Penalty.Missed.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Penalties (Total)</td>
+                        <td>@Model.Item1.Response.Penalty.Total</td>
+                    </tr>
+                    <tr>
+                        <td>Biggest Win Streak</td>
+                        <td>@Model.Item1.Response.Biggest.Streak.Wins</td>
+                    </tr>
+                    <tr>
+                        <td>Biggest Draw Streak</td>
+                        <td>@Model.Item1.Response.Biggest.Streak.Draws</td>
+                    </tr>
+                    <tr>
+                        <td>Biggest Loss Streak</td>
+                        <td>@Model.Item1.Response.Biggest.Streak.Loses</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+
 </div>
