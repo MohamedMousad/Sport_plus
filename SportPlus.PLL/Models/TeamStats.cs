@@ -10,7 +10,7 @@ namespace SportPlus.PLL.Models
         public string? Get { get; set; }
 
         [JsonPropertyName("parameters")]
-        public Parameters? Parameters { get; set; }
+        public TeamStatsParameters? Parameters { get; set; }
 
         [JsonPropertyName("errors")]
         public List<object>? Errors { get; set; }
@@ -19,7 +19,7 @@ namespace SportPlus.PLL.Models
         public int? Results { get; set; }
 
         [JsonPropertyName("paging")]
-        public Paging? Paging { get; set; }
+        public TeamStatsPaging? Paging { get; set; }
 
         [JsonPropertyName("response")]
         public TeamStatsResponse? Response { get; set; }
@@ -39,7 +39,7 @@ namespace SportPlus.PLL.Models
         public Fixtures? Fixtures { get; set; }
 
         [JsonPropertyName("goals")]
-        public Goals? Goals { get; set; }
+        public TeamStatsGoals? Goals { get; set; }
 
         [JsonPropertyName("biggest")]
         public Biggest? Biggest { get; set; }
@@ -51,7 +51,7 @@ namespace SportPlus.PLL.Models
         public FailedToScore? FailedToScore { get; set; }
 
         [JsonPropertyName("penalty")]
-        public Penalty? Penalty { get; set; }
+        public TeamStatsPenalty? Penalty { get; set; }
 
         [JsonPropertyName("lineups")]
         public List<Lineup?>? Lineups { get; set; }
@@ -124,7 +124,7 @@ namespace SportPlus.PLL.Models
         public Loses? Loses { get; set; }
 
         [JsonPropertyName("goals")]
-        public Goals? Goals { get; set; }
+        public TeamStatsGoals? Goals { get; set; }
     }
 
     public class Cards
@@ -208,7 +208,7 @@ namespace SportPlus.PLL.Models
         public int? Away { get; set; }
     }
 
-    public class Goals
+    public class TeamStatsGoals
     {
         [JsonPropertyName("for")]
         public For? For { get; set; }
@@ -274,7 +274,7 @@ namespace SportPlus.PLL.Models
         public string? Percentage { get; set; }
     }
 
-    public class Paging
+    public class TeamStatsPaging
     {
         [JsonPropertyName("current")]
         public int? Current { get; set; }
@@ -283,7 +283,7 @@ namespace SportPlus.PLL.Models
         public int? Total { get; set; }
     }
 
-    public class Parameters
+    public class TeamStatsParameters
     {
         [JsonPropertyName("league")]
         public string? League { get; set; }
@@ -295,7 +295,7 @@ namespace SportPlus.PLL.Models
         public string? Team { get; set; }
     }
 
-    public class Penalty
+    public class TeamStatsPenalty
     {
         [JsonPropertyName("scored")]
         public Scored? Scored { get; set; }
