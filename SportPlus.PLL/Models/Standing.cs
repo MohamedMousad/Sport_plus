@@ -6,12 +6,12 @@ namespace SportPlus.PLL.Models
     public class StandingRoot
     {
         [JsonPropertyName("response")]
-        public List<LeagueResponse> Response { get; set; }
+        public List<LeagueResponse?>? Response { get; set; }
     }
     public class LeagueResponse
     {
         [JsonPropertyName("league")]
-        public LeagueData League { get; set; }
+        public LeagueData? League { get; set; }
     }
     public class LeagueData
     {
@@ -19,22 +19,22 @@ namespace SportPlus.PLL.Models
         public int? Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonPropertyName("country")]
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         [JsonPropertyName("logo")]
-        public string Logo { get; set; }
+        public string? Logo { get; set; }
 
         [JsonPropertyName("flag")]
-        public string Flag { get; set; }
+        public string? Flag { get; set; }
 
         [JsonPropertyName("season")]
         public int? Season { get; set; }
 
         [JsonPropertyName("standings")]
-        public List<List<Standing>> Standings { get; set; }
+        public List<List<Standing?>?>? Standings { get; set; }
     }
     public class Standing
     {
@@ -42,7 +42,7 @@ namespace SportPlus.PLL.Models
         public int? Rank { get; set; }
 
         [JsonPropertyName("team")]
-        public SeasonTeam Team { get; set; }
+        public SeasonTeam? Team { get; set; }
 
         [JsonPropertyName("points")]
         public int? Points { get; set; }
@@ -51,28 +51,28 @@ namespace SportPlus.PLL.Models
         public int? GoalsDiff { get; set; }
 
         [JsonPropertyName("group")]
-        public string Group { get; set; }
+        public string? Group { get; set; }
 
         [JsonPropertyName("form")]
-        public string Form { get; set; }
+        public string? Form { get; set; }
 
         [JsonPropertyName("status")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [JsonPropertyName("all")]
-        public Stats All { get; set; }
+        public Stats? All { get; set; }
 
         [JsonPropertyName("home")]
-        public Stats Home { get; set; }
+        public Stats? Home { get; set; }
 
         [JsonPropertyName("away")]
-        public Stats Away { get; set; }
+        public Stats? Away { get; set; }
 
         [JsonPropertyName("update")]
-        public string Update { get; set; }
+        public string? Update { get; set; }
     }
     public class SeasonTeam
     {
@@ -80,10 +80,10 @@ namespace SportPlus.PLL.Models
         public int? Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonPropertyName("logo")]
-        public string Logo { get; set; }
+        public string? Logo { get; set; }
     }
     public class Stats
     {
@@ -96,7 +96,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("lose")]
         public int? Lose { get; set; }
         [JsonPropertyName("goals")]
-        public SeasonGoals Goals { get; set; }
+        public SeasonGoals? Goals { get; set; }
     }
     public class SeasonGoals
     {

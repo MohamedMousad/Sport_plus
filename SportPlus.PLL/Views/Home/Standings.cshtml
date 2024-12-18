@@ -1,63 +1,144 @@
-﻿@model List<StandingRoot?>
+﻿@model Tuple<StandingRoot?, TopScorerRoot?, TopScorerRoot?>
 @{
     ViewData["Title"] = "Standings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Standings</h1>
+
 <!-- Right table of the current match -->
 <div class="col-lg-6">
     <div class="widget-next-match">
-        @foreach (var root in Model)
+        <!-- Standings Table -->
+        @if (Model.Item1 != null && Model.Item1.Response?.Count > 0)
         {
-            if (root != null && root.Response?.Count > 0)
+            foreach (var leagueResponse in Model.Item1.Response)
             {
-                foreach (var leagueResponse in root.Response)
+                var league = leagueResponse?.League;
+                if (league != null && league.Standings?.Count > 0)
                 {
-                    var league = leagueResponse.League;
-                    if (league != null && league.Standings?.Count > 0)
-                    {
-                        <table class="table custom-table">
-                            <thead>
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>
+                                <th colspan="7">
+                                    <img src="@league.Logo" alt="@league.Name Logo" style="height: 30px;" />
+                                    @league.Name
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Team</th>
+                                <th>P</th>
+                                <th>W</th>
+                                <th>D</th>
+                                <th>L</th>
+                                <th>PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var standing in league.Standings[0])
+                            {
                                 <tr>
-                                    <th colspan="7">
-                                        <img src="@league.Logo" alt="@league.Name Logo" style="height: 30px;" />
-                                        @league.Name
-                                    </th>
+                                    <td>@standing?.Rank</td>
+                                    <td>
+                                        <strong class="text-white">
+                                            <img src="@standing?.Team?.Logo" alt="@standing?.Team?.Name Logo" style="height: 20px;" />
+                                            @standing?.Team?.Name
+                                        </strong>
+                                    </td>
+                                    <td>@standing?.All?.Played</td>
+                                    <td>@standing?.All?.Win</td>
+                                    <td>@standing?.All?.Draw</td>
+                                    <td>@standing?.All?.Lose</td>
+                                    <td>@standing?.Points</td>
                                 </tr>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Team</th>
-                                    <th>P</th>
-                                    <th>W</th>
-                                    <th>D</th>
-                                    <th>L</th>
-                                    <th>PTS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var standing in league.Standings[0])
-                                {
-                                    <tr>
-                                        <td>@standing.Rank</td>
-                                        <td>
-                                            <strong class="text-white">
-                                                <img src="@standing.Team.Logo" alt="@standing.Team.Name Logo" style="height: 20px;" />
-                                                @standing.Team.Name
-                                            </strong>
-                                        </td>
-                                        <td>@standing.All?.Played</td>
-                                        <td>@standing.All?.Win</td>
-                                        <td>@standing.All?.Draw</td>
-                                        <td>@standing.All?.Lose</td>
-                                        <td>@standing.Points</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
+                            }
+                        </tbody>
+                    </table>
                 }
             }
+        }
+
+        <!-- Top Scorers Table -->
+        @if (Model.Item2 != null && Model.Item2.Response?.Count > 0)
+        {
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th colspan="5">Top Scorers</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>Team</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (response, index) in Model.Item2.Response.Select((response, index) => (response, index + 1)))
+                    {
+                        var player = response?.Player;
+                        var stats = response?.Statistics?.FirstOrDefault();
+                        <tr>
+                            <td>@index</td>
+                            <td>
+                                <strong class="text-white">
+                                    <img src="@player?.Photo" alt="@player?.Name Photo" style="height: 20px;" />
+                                    @player?.Name
+                                </strong>
+                            </td>
+                            <td>
+                                <img src="@stats?.Team?.Logo" alt="@stats?.Team?.Name Logo" style="height: 20px;" />
+                                @stats?.Team?.Name
+                            </td>
+                            <td>@stats?.Goals?.Total</td>
+                            <td>@stats?.Goals?.Assists</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <!-- Top Assisters Table -->
+        @if (Model.Item3 != null && Model.Item3.Response?.Count > 0)
+        {
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th colspan="5">Top Assisters</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>Team</th>
+                        <th>Assists</th>
+                        <th>Goals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (response, index) in Model.Item3.Response.Select((response, index) => (response, index + 1)))
+                    {
+                        var player = response?.Player;
+                        var stats = response?.Statistics?.FirstOrDefault();
+                        <tr>
+                            <td>@index</td>
+                            <td>
+                                <strong class="text-white">
+                                    <img src="@player?.Photo" alt="@player?.Name Photo" style="height: 20px;" />
+                                    @player?.Name
+                                </strong>
+                            </td>
+                            <td>
+                                <img src="@stats?.Team?.Logo" alt="@stats?.Team?.Name Logo" style="height: 20px;" />
+                                @stats?.Team?.Name
+                            </td>
+                            <td>@stats?.Goals?.Assists</td>
+                            <td>@stats?.Goals?.Total</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
     </div>
 </div>

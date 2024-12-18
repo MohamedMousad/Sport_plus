@@ -54,31 +54,33 @@ namespace SportPlus.PLL.Controllers
             var model = Tuple.Create(Fixtures, favoriteTeam);
             return View(model);
         }
-        public async Task<IActionResult> Standings()
+        public async Task<IActionResult> Standing()
         {
-            var leagues = new[] { 39, 140, 135, 78, 61, 2 }; // Enum values for the leagues
-            var tasks = leagues.Select(league => _client.GetAsync($"standings?league={league}&season=2021")).ToArray();
-            var responses = await Task.WhenAll(tasks);
+            var teamInput = new teamInput();  // Input form data
+            return View(teamInput);
+        }
+        public async Task<IActionResult> Standings(teamInput LeagueInput)
+        {
+            var leagueId = (int)LeagueInput.League.GetValueOrDefault();
+            var response1 = await _client.GetAsync($"standings?league={leagueId}&season={LeagueInput.Season}");
+            var response2 = await _client.GetAsync($"players/topscorers?league={leagueId}&season={LeagueInput.Season}");
+            var response3 = await _client.GetAsync($"players/topassists?league={leagueId}&season={LeagueInput.Season}");
+            
+            string rawJson_standing = await response1.Content.ReadAsStringAsync();
+            string rawJson_scorers = await response2.Content.ReadAsStringAsync();
+            string rawJson_assists = await response3.Content.ReadAsStringAsync();
 
-            foreach (var response in responses)
+            if (!response1.IsSuccessStatusCode && !response2.IsSuccessStatusCode && !response3.IsSuccessStatusCode)
             {
-                if (!response.IsSuccessStatusCode)
-                {
-                    // Handle the case where the request was unsuccessful (e.g., logging or return an error view)
-                    return View("Error");
-                }
+                // Handle the case where the request was unsuccessful (e.g., logging or return an error view)
+                return View("Error");
             }
 
-            var standings = new List<StandingRoot>();
-            foreach (var response in responses)
-            {
-                // Read the raw JSON content as a string
-                string rawJson = await response.Content.ReadAsStringAsync();
-                // Deserialize the raw JSON into the ApiResponse class
-                var standing = JsonConvert.DeserializeObject<StandingRoot>(rawJson);
-                standings.Add(standing);
-            }
-            return View(standings);
+            var standing = JsonConvert.DeserializeObject<StandingRoot>(rawJson_standing);
+            var scorers = JsonConvert.DeserializeObject<TopScorerRoot>(rawJson_scorers);
+            var assisters = JsonConvert.DeserializeObject<TopScorerRoot>(rawJson_assists);
+            var model = Tuple.Create(standing, scorers, assisters);
+            return View(model);
         }
         public async Task<IActionResult> MatchStats(int id)
         {
