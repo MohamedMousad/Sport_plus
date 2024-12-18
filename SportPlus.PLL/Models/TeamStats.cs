@@ -13,7 +13,7 @@ namespace SportPlus.PLL.Models
         public TeamStatsParameters? Parameters { get; set; }
 
         [JsonPropertyName("errors")]
-        public List<object>? Errors { get; set; }
+        public object? Errors { get; set; }
 
         [JsonPropertyName("results")]
         public int? Results { get; set; }
@@ -22,8 +22,9 @@ namespace SportPlus.PLL.Models
         public TeamStatsPaging? Paging { get; set; }
 
         [JsonPropertyName("response")]
-        public TeamStatsResponse? Response { get; set; }
+        public List<TeamStatsResponse?>? Response { get; set; } // Change this to a list
     }
+
     public class TeamStatsResponse
     {
         [JsonPropertyName("league")]
@@ -59,6 +60,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("cards")]
         public Cards? Cards { get; set; }
     }
+
     public class TeamStatsLeague
     {
         [JsonPropertyName("id")]
@@ -79,6 +81,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("season")]
         public int? Season { get; set; }
     }
+
     public class Against
     {
         [JsonPropertyName("total")]
@@ -345,6 +348,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("106-120")]
         public _106120? _106120 { get; set; }
     }
+
     public class Scored
     {
         [JsonPropertyName("total")]
@@ -446,6 +450,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("106-120")]
         public _106120? _106120 { get; set; }
     }
+
     public class _015
     {
         [JsonPropertyName("total")]

@@ -1,0 +1,41 @@
+﻿@model TeamRoot?
+@{
+    ViewData["Title"] = "TeamStats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>TeamStats</h1>
+
+<!-- Display Team Statistics if data exists -->
+@if (Model.Response != null && Model.Response.Count > 0)
+{
+    <div class="team-stats mt-5">
+        <h2>Team Statistics</h2>
+        @foreach (var item in Model.Response)
+        {
+            <h3>@item.Team?.Name</h3>
+            <img src="@item.Team?.Logo" alt="@item.Team?.Name logo" />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Matches Played</td><td>@item.Fixtures?.Played?.Total</td></tr>
+                    <tr><td>Wins</td><td>@item.Fixtures?.Wins?.Total</td></tr>
+                    <tr><td>Draws</td><td>@item.Fixtures?.Draws?.Total</td></tr>
+                    <tr><td>Losses</td><td>@item.Fixtures?.Loses?.Total</td></tr>
+                    <tr><td>Goals Scored</td><td>@item.Goals?.For?.Total</td></tr>
+                    <tr><td>Goals Conceded</td><td>@item.Goals?.Against?.Total</td></tr>
+                    <tr><td>Clean Sheets (Home)</td><td>@item.CleanSheet?.Home</td></tr>
+                    <tr><td>Clean Sheets (Away)</td><td>@item.CleanSheet?.Away</td></tr>
+                    <tr><td>Clean Sheets (Total)</td><td>@item.CleanSheet?.Total</td></tr>
+                    <tr><td>Penalties Scored</td><td>@item.Penalty?.Scored?.Total</td></tr>
+                    <tr><td>Penalties Missed</td><td>@item.Penalty?.Missed?.Total</td></tr>
+                </tbody>
+            </table>
+        }
+    </div>
+}

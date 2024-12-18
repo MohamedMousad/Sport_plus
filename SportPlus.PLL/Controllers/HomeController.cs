@@ -23,7 +23,7 @@ namespace SportPlus.PLL.Controllers
             _userManager = userManager;
             _client = client;
             _client.BaseAddress = new Uri("https://v3.football.api-sports.io/"); // Set the base address
-            _client.DefaultRequestHeaders.Add("x-rapidapi-key", "94cad5d0fdf6426e72bf730032dbced9"); // Add the API key
+            _client.DefaultRequestHeaders.Add("x-rapidapi-key", "747785eed51ceb8aef6e0bfc8f8572b8"); // Add the API key
             _client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
         }
         public async Task<IActionResult> Index()
@@ -100,27 +100,30 @@ namespace SportPlus.PLL.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> TeamStatistics()
+        public IActionResult TeamStatistics()
         {
-            return View();
+            // Initialize teamInput and TeamRoot models
+            var teamInput = new teamInput();  // Input form data
+            return View(teamInput);
         }
-        [HttpPost]
-        public async Task<IActionResult> TeamStatistics(teamInput teamInput)
+        public async Task<IActionResult> TeamStats(teamInput teamInput)
         {
-            var response = await _client.GetAsync($"teams/statistics?&league={teamInput.League}&season={teamInput.Season}&team={teamInput.Team}");
+            var leagueId = (int)teamInput.League.GetValueOrDefault();
+            var teamId = (int)teamInput.Team.GetValueOrDefault();
+            // Call API to fetch team statistics
+            var response = await _client.GetAsync($"teams/statistics?league={leagueId}&season={teamInput.Season}&team={teamId}");
 
             if (!response.IsSuccessStatusCode)
             {
-                // Handle the case where the request was unsuccessful (e.g., logging or return an error view)
+                // Handle error (e.g., log or return error view)
                 return View("Error");
             }
-            // Read the raw JSON content as a string
-            string rawJson = await response.Content.ReadAsStringAsync();
 
-            //Deserialize the raw JSON into the ApiResponse class
-            var TeamStats = JsonConvert.DeserializeObject<TeamRoot>(value: rawJson);
-            var model = Tuple.Create(TeamStats, teamInput);
+            // Deserialize the raw JSON content
+            string rawJson = await response.Content.ReadAsStringAsync();
+            var TeamStats = JsonConvert.DeserializeObject<TeamRoot>(rawJson);
             return View(TeamStats);
         }
+
     }
 }

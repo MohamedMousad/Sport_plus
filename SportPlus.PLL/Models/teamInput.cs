@@ -5,6 +5,6 @@ namespace SportPlus.PLL.Models
     {
         public FavouriteTeam? Team { get; set; }
         public int? Season { get; set; }
-        public  League? League{ get; set; }
+        public  SportPlus.DAL.Enums.League? League{ get; set; }
     }
 }
