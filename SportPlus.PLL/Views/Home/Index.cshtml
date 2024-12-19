@@ -7,24 +7,317 @@
     var favouriteTeamFixture = Model?.Item1?.Response?.FirstOrDefault(f => ((f.Teams?.Home?.Id == (int?)Model?.Item2) || (f.Teams?.Away?.Id == (int?)Model?.Item2)));
     var randomLiveFixture = Model?.Item1?.Response?.FirstOrDefault(f => f.Fixture?.Status?.Elapsed != null);
 }
+<style>
+    body {
+        background-color: #080710;
+        height: 400px;
+    }
+
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 800px;
+    }
+
+        .hero img {
+            width: 100%;
+            height: 930px;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+
+        .hero.overlay:before {
+            background: rgba(0, 0, 0, 0.5);
+            height: 930px;
+        }
+
+    .team-vs {
+        background-color: #0d0f13;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-top: -90px;
+        position: relative;
+        -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.1);
+        height: 174px;
+        width: 100%;
+        margin-top: 38px;
+
+        .team-vs .team-details img {
+            width: 90px;
+        }
+
+        .team-vs .score {
+            font-size: 30px;
+        margin-left: 16px;
+        }
+
+    .css-1lleae-CardCSS {
+        overflow: hidden;
+        background-color: rgba(29, 29, 29, 1.0);
+        border: solid 1px transparent;
+        border-radius: 16px;
+        display: block;
+        font-family: system, Arial, sans-serif;
+        font-weight: normal;
+        font-feature-settings: "ss01";
+        box-sizing: border-box;
+        color: rgba(255, 255, 255, 1.0);
+        width: 50%;
+        margin-left: 350px;
+        margin-bottom: 20px;
+    }
+
+    .css-97a72h-LeagueMatchesWrapper {
+        --item-height: 64px;
+        --duration: 150ms;
+        display: flex;
+        justify-content: center;
+        padding: 19px;
+    }
+
+    .css-9871a0-StatusAndHomeTeamWrapper {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: row-reverse;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        min-width: 0px;
+        margin-left: -95px;
+    }
+
+    .css-gn249o-AwayTeamAndFollowWrapper {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: row-reverse;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        min-width: 0px;
+        margin-left: 27px;
+    }
+
+    .css-hytar5-TimeCSS e3r3fwa1{
+        display: flex;
+        justify-content: center;
+        width: 100px;
+        margin-top: 10px;
+    }
+    
+    .css-ky5j63-LSMatchStatusTime e5pc0pz4{
+        margin-bottom:10px;
+    }
+
+    .css-1v13k0i-TeamBlockCSS emmmxv01{
+        display:flex;
+        justify-content:center;
+        margin:auto;
+    }
+
+    .css-k083tz-StatusLSMatchWrapperCSS {
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: max-content;
+        row-gap: 5px;
+        justify-items: center;
+        justify-self: center;
+        width: 100px;
+    }
+
+
+    .css-1lleae-CardCSS {
+        overflow: hidden;
+        background-color: rgba(29, 29, 29, 1.0);
+        border: solid 1px transparent;
+        ;
+        border-radius: 16px;
+        display: block;
+        font-family: system, Arial, sans-serif;
+        font-weight: normal;
+        font-feature-settings: "ss01";
+        box-sizing: border-box;
+        color: rgba(255, 255, 255, 1.0);
+        width: 50%;
+        margin-left: 350px;
+    }
+
+    div {
+        color: rgba(255, 255, 255, 1.0);
+        unicode-bidi: isolate;
+        font-weight: normal;
+        box-sizing: border-box;
+    }
+
+    .css-1lleae-CardCSS a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 1.0);
+        outline: none;
+        border: 0;
+        background: 0;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .css-1jj74kp-GroupHeaderContainer {
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        height: 48px;
+        padding-left: 16px;
+        letter-spacing: 0.27px;
+        background: red;
+    }
+
+    .css-97a72h-LeagueMatchesWrapper {
+        --item-height: 64px;
+        --duration: 150ms;
+        display: flex;
+        justify-content: center;
+    }
+
+    .css-s4hjf6-MatchWrapper:last-child {
+        border-bottom: none;
+    }
+
+    }
+
+    .css-s4hjf6-MatchWrapper {
+        position: relative;
+        display: grid;
+        -webkit-box-align: center;
+        align-items: center;
+        grid-template-columns: 1fr 40px 1fr;
+        column-gap: 2px;
+        user-select: none;
+        background: rgba(29, 29, 29, 1.0);
+        min-height: 56px;
+        border-bottom: rgba(38, 38, 38, 1.0);
+    }
+
+    .css-9871a0-StatusAndHomeTeamWrapper {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: row-reverse;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        min-width: 0px;
+        width:auto;
+        margin-right:40px;
+    }
+
+    .css-k083tz-StatusLSMatchWrapperCSS {
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: max-content;
+        row-gap: 5px;
+        justify-items: center;
+        justify-self: center;
+    }
+
+    .css-gn249o-AwayTeamAndFollowWrapper {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: row-reverse;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        min-width: 0px;
+        margin-left: 20px;
+    }
+
+    .css-hytar5-TimeCSS e3r3fwa1{
+        width: 100px;
+        margin: auto;
+
+    }
+
+    .call-to-action {
+        background-color: #ee1e46;
+        color: #fff;
+        text-align: center;
+        padding: 2rem 1rem;
+        margin-top: 2rem;
+        margin-bottom:-10px;
+        width: 900px;
+        border-radius: 20px;
+        margin-left: 280px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .call-to-action:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+}
+
+    .call-to-action .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .call-to-action h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .call-to-action p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+    .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .cta-button {
+        background-color: #343a40;
+        color: #fff;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cta-button:hover {
+            background-color: black;
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+    .cta-button.premium {
+            background-color: #343a40;
+    }
+    .cta-button.premium:hover {
+                background-color: black;
+                transform: scale(1.1);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            }
+
+</style>
 
 <body>
-    <div class="hero overlay" style="background-image: url('~/images/bg_3.jpg');">
+    <div class="hero overlay">
+        <img src="~/images/bg_3.jpg" />
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 ml-auto">
-                    <h1 class="text-white">Incoming <br> Match</h1>
+                    <h1 class="text-white" style="margin-bottom:20px;">Recent <br> Match</h1>
                     <div class="d-flex team-vs">
                         <span class="score"></span>
                         <div class="team-1 w-50">
                             <div class="team-details w-100 text-center">
-                                <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Logo ?? "images/logo_1.png")" alt="Image" class="img-fluid">
+                                <img style="width: 123px;height: 119px;" src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Logo ?? "images/logo_1.png")" alt="Image" class="img-fluid">
                                 @* <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "team1") <span></span></h3> *@
                             </div>
                         </div>
                         <div class="team-2 w-50">
                             <div class="team-details w-100 text-center">
-                                <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Logo ?? "images/logo_2.png")" alt="Image" class="img-fluid">
+                                <img style="width: 122px;height: 121px;" src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Logo ?? "images/logo_2.png")" alt="Image" class="img-fluid">
                                 @* <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "team2") <span></span></h3> *@
                             </div>
                         </div>
@@ -39,23 +332,23 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex team-vs">
-                    <span class="score">@((favouriteTeamFixture ?? randomLiveFixture)?.Score?.Fulltime?.Home ?? 0) - @((favouriteTeamFixture ?? randomLiveFixture)?.Score?.Fulltime?.Away ?? 0)</span>
+                    <span style="margin-left: -10px;" class="score">@((favouriteTeamFixture ?? randomLiveFixture)?.Score?.Fulltime?.Home ?? 0) - @((favouriteTeamFixture ?? randomLiveFixture)?.Score?.Fulltime?.Away ?? 0)</span>
                     <div class="team-1 w-50">
                         <div class="team-details w-100 text-center">
                             <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Logo ?? "images/logo_1.png")" alt="Image" class="img-fluid">
-                            <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "team1") <span></span></h3>
-                            @* <ul class="list-unstyled"> *@
+                            <h3 style="margin-left: -3px;">@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "team1") <span></span></h3>
+                            @* <ul class="list-unstyled">  *@
                             @*     <li>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Home?.Name ?? "Player")</li> *@
-                            @* </ul> *@
+                            @*  </ul> *@
                         </div>
                     </div>
                     <div class="team-2 w-50">
                         <div class="team-details w-100 text-center">
                             <img src="@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Logo ?? "images/logo_2.png")" alt="Image" class="img-fluid">
                             <h3>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "team2") <span></span></h3>
-                            @* <ul class="list-unstyled"> *@
-                            @*     <li>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "Player")</li> *@
-                            @* </ul> *@
+                            @* <ul class="list-unstyled">  *@
+                            @*      <li>@((favouriteTeamFixture ?? randomLiveFixture)?.Teams?.Away?.Name ?? "Player")</li> *@
+                            @*  </ul>  *@
                         </div>
                     </div>
                 </div>
@@ -64,11 +357,11 @@
     </div>
 
     <!-- fixtures -->
-    <div class="css-1lleae-CardCSS e1mlfzv61">
-        @foreach (var l in leagueId)
-        {
-            bool flag = false; // Move flag inside the league loop
-            foreach (var fixture in Model?.Item1.Response)
+    @foreach (var l in leagueId)
+    {
+        bool flag = false; // Move flag inside the league loop
+        <div class="css-1lleae-CardCSS e1mlfzv61" style="margin-bottom:20px;">
+            @foreach (var fixture in Model?.Item1.Response)
             {
                 if (fixture?.League?.Id == l)
                 {
@@ -76,28 +369,32 @@
                     {
                         <div>
                             <a href="/leagues/87/overview/laliga">
-                                <div class="css-1jj74kp-GroupHeaderContainer ei2uj7w2">
-                                    <img src="@fixture.League.Logo" class="Image CountryIcon ImageWithFallback" alt="" width="20" height="20" loading="lazy">
+                                <div class="css-1jj74kp-GroupHeaderContainer ei2uj7w2" style="background-color:#ee1e46;">
+                                    <img src="@fixture.League.Logo" class="Image CountryIcon ImageWithFallback" alt="" width="30" height="auto" loading="lazy" style="margin-right:10px;">
                                     <div class="css-170egrx-GroupTitle ei2uj7w0">@fixture.League.Name</div>
                                 </div>
                             </a>
                         </div>
+
                         flag = true;
                     }
+
                     <!-- Render individual fixture -->
                     <div class="css-97a72h-LeagueMatchesWrapper e1rcfwkv0">
                         <a href="javascript:void(0);" onclick="validateMatchStatus(@fixture.Fixture.Status.Elapsed, '@Url.Action("MatchStats", "Home", new { id = fixture.Fixture.Id })')" class="css-s4hjf6-MatchWrapper e1ek4pst2">
-                            <div class="css-9871a0-StatusAndHomeTeamWrapper e1ek4pst4">
+                            <div class="css-9871a0-StatusAndHomeTeamWrapper e1ek4pst4" style="margin-left:-47px;">
                                 <div class="css-1v13k0i-TeamBlockCSS emmmxv01">
                                     <span class="css-1wtw6ba-TeamName emmmxv00">@fixture.Teams?.Home?.Name</span>
-                                    <img src="@fixture.Teams?.Home?.Logo" class="Image TeamIcon ImageWithFallback" alt="" width="22" height="22" loading="lazy">
+                                    <img src="@fixture.Teams?.Home?.Logo" class="Image TeamIcon ImageWithFallback" alt="" width="30" height="auto" loading="lazy">
                                 </div>
                             </div>
                             <div class="css-k083tz-StatusLSMatchWrapperCSS e5pc0pz0">
                                 @if (fixture.Fixture.Status.Elapsed == null)
                                 {
                                     <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
-                                        <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Fixture?.Date<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
+                                        <div class="css-hytar5-TimeCSS e3r3fwa1">
+                                            @fixture.Fixture?.Date<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span>
+                                        </div>
                                     </span>
                                 }
                                 else if (fixture.Fixture.Status.Elapsed == 90 || fixture.Fixture.Status.Elapsed == 120)
@@ -105,7 +402,7 @@
                                     <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
                                         <div class="css-hytar5-TimeCSS e3r3fwa1">Full Time<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
                                     </span>
-                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz3">
+                                    <span class="css-ky5j63-LSMatchStatusTime e5pc0pz4">
                                         <div class="css-hytar5-TimeCSS e3r3fwa1">@fixture.Score?.Fulltime?.Home - @fixture.Score?.Fulltime?.Away<span class="css-xhwcu3-AdjustedFontSize e3r3fwa0"></span></div>
                                     </span>
                                 }
@@ -124,15 +421,26 @@
                             </div>
                             <div class="css-gn249o-AwayTeamAndFollowWrapper e1ek4pst5">
                                 <div class="css-so6otw-TeamBlockCSS emmmxv01">
+                                    <img src="@fixture.Teams?.Away?.Logo" class="Image TeamIcon ImageWithFallback" alt="" width="30" height="auto" loading="lazy">
                                     <span class="css-1wtw6ba-TeamName emmmxv00">@fixture.Teams?.Away?.Name</span>
-                                    <img src="@fixture.Teams?.Away?.Logo" class="Image TeamIcon ImageWithFallback" alt="" width="22" height="22" loading="lazy">
                                 </div>
                             </div>
                         </a>
                     </div>
                 }
             }
-        }
+        </div>
+    }
+
+    <div class="call-to-action">
+        <div class="cta-content">
+            <h2>Want More from Sport Plus</h2>
+            <p>Access Team Standings, Team Stats, and Match Stats Instantly with a Single Click!</p>
+            <div class="cta-buttons">
+                <button class="cta-button">Standings</button>
+                <button class="cta-button premium">Teams Stats</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -145,86 +453,3 @@
         }
     </script>
 </body>
-@*     <!-- next match --> *@
-@*     <div class="site-section bg-dark"> *@
-@*         <div class="container"> *@
-@*             <div class="row"> *@
-@*                 <div class="col-lg-6"> *@
-@*                     <div class="widget-next-match"> *@
-@*                         <div class="widget-title"> *@
-@*                             <h3>Next Match</h3> *@
-@*                         </div> *@
-@*                         <div class="widget-body mb-3"> *@
-@*                             <div class="widget-vs"> *@
-@*                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100"> *@
-@*                                     <div class="team-1 text-center"> *@
-@*                                         <img src="~/images/logo_1.png" alt="Image"> *@
-@*                                         <h3>Team1</h3> *@
-@*                                     </div> *@
-@*                                     <div> *@
-@*                                         <span class="vs"><span>VS</span></span> *@
-@*                                     </div> *@
-@*                                     <div class="team-2 text-center"> *@
-@*                                         <img src="~/images/logo_2.png" alt="Image"> *@
-@*                                         <h3>Team2</h3> *@
-@*                                     </div> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                         <!-- match info --> *@
-@*                         <div class="text-center widget-vs-contents mb-4"> *@
-@*                             <h4>World Cup League</h4> *@
-@*                             <p class="mb-5"> *@
-@*                                 <span class="d-block">December 20th, 2020</span> *@
-@*                                 <span class="d-block">9:30 AM GMT+0</span> *@
-@*                                 <strong class="text-primary">New Euro Arena</strong> *@
-@*                             </p> *@
-@*                             <!-- timer countdown  --> *@
-@*                             <div id="date-countdown2" class="pb-1"></div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@*     </div> <!-- .site-section --> *@
-@*     <!-- beggining of 4 leagues --> *@
-@*     <div class="site-section"> *@
-@*         <div class="container"> *@
-@*             <div class="row"> *@
-@*                 <div class="col-6 title-section"> *@
-@*                     <h2 class="heading">Standings</h2> *@
-@*                 </div> *@
-@*                 <div class="col-6 text-right"> *@
-@*                     <div class="custom-nav"> *@
-@*                         <a href="#" class="js-custom-prev-v2"><span class="icon-keyboard_arrow_left"></span></a> *@
-@*                         <span></span> *@
-@*                         <a href="#" class="js-custom-next-v2"><span class="icon-keyboard_arrow_right"></span></a> *@
-@*                     </div> *@
-@*                 </div> *@
-@*             </div> *@
-
-@*             <!-- 4 tables of leagues here --> *@
-@*             <div class="owl-4-slider owl-carousel"> *@
-@*                 <div class="widget-next-match"> *@
-@*                     <table class="table custom-table"> *@
-@*                         <thead> *@
-@*                             <tr> *@
-@*                                 <th>#</th> *@
-@*                                 <th>Team</th> *@
-@*                                 <th>Pl</th> *@
-@*                                 <th>PTS</th> *@
-@*                             </tr> *@
-@*                         </thead> *@
-@*                         <tbody> *@
-@*                             <tr> *@
-@*                                 <td>i</td> *@
-@*                                 <td><strong class="text-white">team name</strong></td> *@
-@*                                 <td>played</td> *@
-@*                                 <td>points</td> *@
-@*                             </tr> *@
-@*                         </tbody> *@
-@*                     </table> *@
-@*                 </div> *@
-@*             </div> *@
-@*         </div> *@
-@* </body> *@
