@@ -22,8 +22,9 @@ namespace SportPlus.PLL.Models
         public TeamStatsPaging? Paging { get; set; }
 
         [JsonPropertyName("response")]
-        public List<TeamStatsResponse?>? Response { get; set; } // Change this to a list
+        public TeamStatsResponse? Response { get; set; } // Change this to a single object
     }
+
 
     public class TeamStatsResponse
     {
@@ -60,6 +61,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("cards")]
         public Cards? Cards { get; set; }
     }
+
 
     public class TeamStatsLeague
     {
@@ -166,13 +168,13 @@ namespace SportPlus.PLL.Models
     public class FailedToScore
     {
         [JsonPropertyName("home")]
-        public int? Home { get; set; }
+        public object? Home { get; set; }
 
         [JsonPropertyName("away")]
-        public int? Away { get; set; }
+        public object? Away { get; set; }
 
         [JsonPropertyName("total")]
-        public int? Total { get; set; }
+        public object? Total { get; set; }
     }
 
     public class Fixtures
@@ -232,14 +234,15 @@ namespace SportPlus.PLL.Models
     public class Loses
     {
         [JsonPropertyName("home")]
-        public int? Home { get; set; }
+        public string? Home { get; set; } // Change this to string
 
         [JsonPropertyName("away")]
-        public int? Away { get; set; }
+        public string? Away { get; set; } // Change this to string
 
         [JsonPropertyName("total")]
         public int? Total { get; set; }
     }
+
 
     public class Minute
     {
@@ -313,13 +316,13 @@ namespace SportPlus.PLL.Models
     public class Played
     {
         [JsonPropertyName("home")]
-        public int? Home { get; set; }
+        public object? Home { get; set; }
 
         [JsonPropertyName("away")]
-        public int? Away { get; set; }
+        public object? Away { get; set; }
 
         [JsonPropertyName("total")]
-        public int? Total { get; set; }
+        public object? Total { get; set; }
     }
 
     public class Red
@@ -415,14 +418,15 @@ namespace SportPlus.PLL.Models
     public class Wins
     {
         [JsonPropertyName("home")]
-        public int? Home { get; set; }
+        public string? Home { get; set; } // Change this to string
 
         [JsonPropertyName("away")]
-        public int? Away { get; set; }
+        public string? Away { get; set; } // Change this to string
 
         [JsonPropertyName("total")]
         public int? Total { get; set; }
     }
+
 
     public class Yellow
     {

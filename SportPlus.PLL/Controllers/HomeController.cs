@@ -23,7 +23,7 @@ namespace SportPlus.PLL.Controllers
             _userManager = userManager;
             _client = client;
             _client.BaseAddress = new Uri("https://v3.football.api-sports.io/"); // Set the base address
-            _client.DefaultRequestHeaders.Add("x-rapidapi-key", "747785eed51ceb8aef6e0bfc8f8572b8"); // Add the API key
+            _client.DefaultRequestHeaders.Add("x-rapidapi-key", "4329296ec5c01812f88d21c516cf39ed"); // Add the API key
             _client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
         }
         public async Task<IActionResult> Index()

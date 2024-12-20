@@ -38,7 +38,7 @@ namespace SportPlus.PLL.Models
     public class TopScorerCards
     {
         [JsonPropertyName("yellow")]
-        public int? Yellow { get; set; }
+        public int? Yellow { get; set; } // Change this to int?
 
         [JsonPropertyName("yellowred")]
         public int? Yellowred { get; set; }
@@ -46,6 +46,7 @@ namespace SportPlus.PLL.Models
         [JsonPropertyName("red")]
         public int? Red { get; set; }
     }
+
 
     public class Dribbles
     {
@@ -276,11 +277,12 @@ namespace SportPlus.PLL.Models
         public Fouls? Fouls { get; set; }
 
         [JsonPropertyName("cards")]
-        public Cards? Cards { get; set; }
+        public TopScorerCards? Cards { get; set; } // Ensure this is of type TopScorerCards
 
         [JsonPropertyName("penalty")]
         public TopScorerPenalty? Penalty { get; set; }
     }
+
 
     public class Substitutes
     {
